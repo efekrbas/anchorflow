@@ -1,0 +1,24 @@
+{
+  "name": "anchorflow-stellar-service",
+  "version": "1.0.0",
+  "description": "AnchorFlow backend service for Stellar Anchor integration (SEP-10, SEP-24, SEP-31)",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^12.3.0",
+    "express": "^4.21.0",
+    "dotenv": "^16.4.5",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.0",
+    "@types/node-fetch": "^2.6.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.0"
+  }
+}
