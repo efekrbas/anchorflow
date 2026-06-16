@@ -18,7 +18,7 @@ import { resolveAnchorToml } from "./toml-resolver";
 /**
  * Per-asset information returned by SEP-24 /info.
  *
- * Each asset (e.g. "USDC", "XLM") describes whether deposit
+ * Each asset (e.g. "USDC", "EURC", "XLM") describes whether deposit
  * and/or withdrawal is enabled, and any fee structure.
  */
 export interface Sep24AssetInfo {
@@ -81,7 +81,7 @@ export interface Sep31InfoResponse {
  * @example
  * ```ts
  * const info = await getSep24Info();
- * console.log(info.deposit["USDC"]); // { enabled: true, ... }
+ * console.log(info.deposit["USDC", "EURC"]); // { enabled: true, ... }
  * ```
  */
 export async function getSep24Info(): Promise<Sep24InfoResponse> {
@@ -129,7 +129,7 @@ export async function getSep24Info(): Promise<Sep24InfoResponse> {
  * @example
  * ```ts
  * const info = await getSep31Info();
- * console.log(info.receive["USDC"]); // { enabled: true, ... }
+ * console.log(info.receive["USDC", "EURC"]); // { enabled: true, ... }
  * ```
  */
 export async function getSep31Info(): Promise<Sep31InfoResponse> {
@@ -156,3 +156,4 @@ export async function getSep31Info(): Promise<Sep31InfoResponse> {
 
   return data;
 }
+
