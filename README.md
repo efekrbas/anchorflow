@@ -318,3 +318,7 @@ This project is licensed under the [MIT License](LICENSE).
   <strong>AnchorFlow</strong> — Fast, affordable cross-border payments for everyone.<br/>
   <em>Built with ⚡ on Stellar & Soroban</em>
 </p>
+
+## Links
+- [Architecture](docs/ARCHITECTURE.md)
+- [Deployment](docs/DEPLOYMENT.md)
