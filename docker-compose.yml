@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  backend:
+    build: ./stellar-anchor-service
+    ports:
+      - "3001:3001"
+    env_file: .env
