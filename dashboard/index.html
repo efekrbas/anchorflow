@@ -187,10 +187,14 @@
 
     /* Toast */
     .toast {
+      opacity: 0;
+      pointer-events: none;
       transform: translateX(120%);
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
     }
     .toast.show {
+      opacity: 1;
+      pointer-events: auto;
       transform: translateX(0);
     }
   </style>
