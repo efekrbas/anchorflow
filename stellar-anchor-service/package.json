@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AnchorFlow backend service for Stellar Anchor integration (SEP-10, SEP-24, SEP-31)",
   "main": "dist/index.js",
-  "scripts": {
+  "scripts": {`n    "test": "jest",
     "build": "tsc",
     "dev": "ts-node src/index.ts",
     "start": "node dist/index.js"
@@ -22,3 +22,4 @@
     "typescript": "^5.7.0"
   }
 }
+
