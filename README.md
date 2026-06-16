@@ -4,6 +4,7 @@
   <img src="https://img.shields.io/badge/TypeScript-Backend-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
   <img src="https://img.shields.io/badge/Tailwind%20CSS-Dashboard-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
+  <a href="https://anchorflow-app.vercel.app/"><img src="https://img.shields.io/badge/Live%20Demo-anchorflow--app.vercel.app-brightgreen?style=for-the-badge&logo=vercel&logoColor=white" /></a>
 </p>
 
 <h1 align="center">⚡ AnchorFlow</h1>
@@ -11,6 +12,10 @@
 <p align="center">
   <strong>Micro-Remittance & Cross-Border Payment Platform</strong><br/>
   <em>Powered by Stellar Network & Soroban Smart Contracts</em>
+</p>
+
+<p align="center">
+  🌐 <strong>Live Demo:</strong> <a href="https://anchorflow-app.vercel.app/">https://anchorflow-app.vercel.app/</a>
 </p>
 
 <p align="center">
@@ -127,7 +132,7 @@ anchor_flow/
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/anchorflow.git
+git clone https://github.com/efekrbas/anchorflow.git
 cd anchorflow/anchor_flow
 
 # Run tests
@@ -156,6 +161,9 @@ npm run dev
 
 ### 3. Dashboard
 
+The dashboard is live at **[https://anchorflow-app.vercel.app/](https://anchorflow-app.vercel.app/)**.
+
+To run locally:
 ```bash
 # Open dashboard/index.html directly in your browser
 # or serve it with a Live Server extension
@@ -316,9 +324,11 @@ This project is licensed under the [MIT License](LICENSE).
 
 <p align="center">
   <strong>AnchorFlow</strong> — Fast, affordable cross-border payments for everyone.<br/>
-  <em>Built with ⚡ on Stellar & Soroban</em>
+  <em>Built with ⚡ on Stellar & Soroban</em><br/>
+  🌐 <a href="https://anchorflow-app.vercel.app/">https://anchorflow-app.vercel.app/</a>
 </p>
 
 ## Links
+- 🌐 [Live Demo](https://anchorflow-app.vercel.app/)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Deployment](docs/DEPLOYMENT.md)
