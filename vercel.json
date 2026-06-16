@@ -7,7 +7,7 @@
     }
   ],
   "routes": [
-    { "src": "/logo.png", "dest": "/dashboard/logo.png" },
+    { "src": "/logo.jpg", "dest": "/dashboard/logo.jpg" },
     { "src": "/(.*)", "dest": "/dashboard/index.html" }
   ]
 }
