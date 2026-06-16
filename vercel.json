@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "stellar-anchor-service/package.json",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "dashboard/index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/stellar-anchor-service/src/index.ts" },
+    { "src": "/(.*)", "dest": "/dashboard/index.html" }
+  ]
+}
