@@ -84,6 +84,11 @@
 | Stellar Discord | Active contributor | Answered 8 questions in #dev-help |
 | GitHub | 3 stars, 2 forks | 1 external PR reviewed |
 
+### Social Media Growth Proof
+- **Follower Growth:** Gained 50+ new followers on X within the first month.
+- **Engagement Strategy:** Launched beta announcement, shared development milestones (hitting 50 users), requested open-source contributions, and posted product updates.
+- **Verification:** All live post links and engagement proof can be found in [Social Media Proof Document](./SOCIAL_MEDIA_PROOF.md).
+
 ### Community Contribution Proof
 - Answered 8 developer questions in Stellar Discord #dev-help channel
 - Published a tutorial thread on Twitter about "Building an Escrow on Soroban"
