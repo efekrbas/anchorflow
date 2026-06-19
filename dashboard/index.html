@@ -17,7 +17,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <link rel="icon" type="image/jpeg" href="/logo.jpg" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="logo.jpg" />
 
   <!-- Tailwind Config -->
   <script>
@@ -138,10 +139,59 @@
 
     /* Loading skeleton shimmer */
     .skeleton {
-      background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+      background: linear-gradient(90deg, rgba(255,255,255,0.02) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.02) 75%);
       background-size: 200% 100%;
-      animation: shimmer 2s infinite;
+      animation: shimmer 1.5s infinite;
       border-radius: 6px;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    /* CSS Tooltip */
+    .tooltip-container {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      cursor: help;
+    }
+    .tooltip-container .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      width: 220px;
+      background-color: #09090b;
+      color: #e5e7eb;
+      text-align: center;
+      border-radius: 8px;
+      padding: 8px 12px;
+      position: absolute;
+      z-index: 50;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      transition: opacity 0.2s, transform 0.2s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      font-size: 0.75rem;
+      font-weight: normal;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .tooltip-container:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .tooltip-container .tooltip-text::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.1) transparent transparent transparent;
     }
 
     /* Status badge */
@@ -342,7 +392,13 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
             </svg>
           </div>
-          <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Sequence</span>
+          <span class="tooltip-container">
+            <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest flex items-center gap-1">
+              Sequence
+              <svg class="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </span>
+            <span class="tooltip-text">A unique incremental number ensuring transactions are submitted in order.</span>
+          </span>
         </div>
         <p id="statSequence" class="text-xl font-mono text-gray-300 font-medium tracking-wider truncate" title="Sequence Number">—</p>
       </div>
@@ -447,7 +503,13 @@
 
             <!-- Arbiter Address -->
             <div>
-              <label for="arbiterAddr" class="block text-xs font-medium text-gray-400 mb-1.5">Arbiter (Compliance)</label>
+              <label for="arbiterAddr" class="tooltip-container block mb-1.5 text-left">
+                <span class="text-xs font-medium text-gray-400 flex items-center gap-1">
+                  Arbiter (Compliance)
+                  <svg class="w-3.5 h-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </span>
+                <span class="tooltip-text">The designated third-party who can approve or release locked funds based on compliance rules.</span>
+              </label>
               <input
                 type="text"
                 id="arbiterAddr"
@@ -573,6 +635,39 @@
     window.addEventListener('DOMContentLoaded', applyBrandConfig);
 
     // ================================================================
+    // Helpers
+    // ================================================================
+
+    /**
+     * Formats a date into a relative time string (e.g., "5m ago", "2h ago").
+     */
+    function formatRelativeTime(date) {
+      const now = new Date();
+      const diffMs = now - new Date(date);
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMins / 60);
+      const diffDays = Math.floor(diffHours / 24);
+
+      if (diffMins < 1) return "Just now";
+      if (diffMins < 60) return `${diffMins}m ago`;
+      if (diffHours < 24) return `${diffHours}h ago`;
+      return `${diffDays}d ago`;
+    }
+
+    /**
+     * Formats a date object into a readable date string.
+     */
+    function formatDate(date) {
+      return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // ================================================================
     // Constants
     // ================================================================
 
@@ -626,37 +721,49 @@
      * and the last 10 transactions from Stellar Horizon testnet.
      */
     async function connectWallet() {
-      const addressInput = document.getElementById("walletAddress");
-      const address = addressInput.value.trim();
-
-      // ── Validate ──
-      if (!address || !address.startsWith("G") || address.length !== 56) {
-        showToast("error", "Invalid Address", "Please enter a valid Stellar public key (G...).");
-        addressInput.focus();
+      const walletAddress = document.getElementById("walletAddress").value.trim();
+      if (!walletAddress) {
+        showToast("Please enter a valid Stellar wallet address", "error");
         return;
       }
 
-      // ── UI: Loading state ──
-      const connectBtn = document.getElementById("connectBtn");
-      const connectBtnText = document.getElementById("connectBtnText");
-      connectBtn.disabled = true;
-      connectBtnText.innerHTML = `
-        <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-        </svg>
-        Loading...
+      // Show sections & skeletons
+      document.getElementById("statsSection").classList.remove("hidden");
+      document.getElementById("mainContent").classList.remove("hidden");
+      
+      const setSkeleton = (id) => {
+        document.getElementById(id).innerHTML = '<div class="skeleton h-8 w-24"></div>';
+      };
+      setSkeleton("statBalance");
+      setSkeleton("statTxCount");
+      setSkeleton("statLastActive");
+      setSkeleton("statSequence");
+
+      document.getElementById("txTableBody").innerHTML = `
+        <tr>
+          <td colspan="5" class="py-6 px-4">
+            <div class="flex flex-col items-center gap-3">
+              <div class="skeleton h-4 w-full max-w-md"></div>
+              <div class="skeleton h-4 w-full max-w-sm"></div>
+              <div class="skeleton h-4 w-full max-w-xs"></div>
+            </div>
+          </td>
+        </tr>
       `;
 
       try {
+        const btn = document.getElementById("connectBtnText");
+        btn.innerHTML = `
+          <svg class="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Connecting...
+        `;
+
         // ── Fetch account info for balance & stats ──
-        const accountRes = await fetch(`${HORIZON_URL}/accounts/${address}`);
-        if (!accountRes.ok) {
-          if (accountRes.status === 404) {
-            throw new Error("Account not found on the Stellar testnet. Fund it first via friendbot.");
-          }
-          throw new Error(`Horizon returned ${accountRes.status}`);
-        }
+        const accountRes = await fetch(`${HORIZON_URL}/accounts/${walletAddress}`);
+        if (!accountRes.ok) throw new Error("Account not found.");
         const account = await accountRes.json();
 
         // ── Update stats ──
@@ -664,21 +771,18 @@
         document.getElementById("statBalance").textContent =
           xlmBalance ? parseFloat(xlmBalance.balance).toLocaleString("en-US", { maximumFractionDigits: 4 }) + " XLM" : "0 XLM";
         
-        // Ensure the sequence number is truncated nicely to prevent overflow
         const seq = account.sequence || "";
         document.getElementById("statSequence").textContent = seq.length > 8 ? "..." + seq.slice(-8) : seq;
 
-        // ── Update wallet badge ──
         document.getElementById("walletBadge").classList.remove("hidden");
         document.getElementById("walletBadge").classList.add("flex");
         document.getElementById("walletBadgeText").textContent =
-          address.slice(0, 6) + "..." + address.slice(-4);
+          walletAddress.slice(0, 6) + "..." + walletAddress.slice(-4);
 
         // ── Fetch last 10 transactions ──
         const txRes = await fetch(
-          `${HORIZON_URL}/accounts/${address}/transactions?limit=10&order=desc`
+          `${HORIZON_URL}/accounts/${walletAddress}/transactions?limit=10&order=desc`
         );
-        if (!txRes.ok) throw new Error(`Failed to fetch transactions: ${txRes.status}`);
         const txData = await txRes.json();
         const transactions = txData._embedded.records;
 
@@ -689,19 +793,12 @@
           document.getElementById("statLastActive").textContent = formatRelativeTime(lastDate);
         }
 
-        // ── Render table ──
-        renderTransactionTable(transactions, address);
-
-        // ── Show sections ──
-        document.getElementById("statsSection").classList.remove("hidden");
-        document.getElementById("statsSection").classList.add("grid");
-        document.getElementById("mainContent").classList.remove("hidden");
-        document.getElementById("mainContent").classList.add("grid");
-
+        renderTransactionTable(transactions, walletAddress);
         showToast("success", "Connected", `Loaded ${transactions.length} transactions.`);
 
       } catch (err) {
-        showToast("error", "Connection Failed", err.message);
+        console.error(err);
+        showToast("error", "Connection Failed", err.message || "Unknown error");
       } finally {
         connectBtn.disabled = false;
         connectBtnText.innerHTML = `
@@ -728,12 +825,15 @@
       if (transactions.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="5" class="px-6 py-12 text-center">
-              <div class="flex flex-col items-center gap-3">
-                <svg class="w-12 h-12 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                </svg>
-                <p class="text-gray-500 text-sm">No transactions found for this account.</p>
+            <td colspan="5" class="px-6 py-16 text-center">
+              <div class="flex flex-col items-center justify-center animate-fade-in">
+                <div class="w-16 h-16 rounded-full bg-[#0f1523] border border-white/5 flex items-center justify-center mb-4 shadow-inner">
+                  <svg class="w-8 h-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 class="text-gray-300 font-medium text-sm mb-1">No Transactions Found</h3>
+                <p class="text-gray-500 text-xs max-w-xs mx-auto">This wallet has not made any transactions yet. Once activity occurs, it will appear here.</p>
               </div>
             </td>
           </tr>
