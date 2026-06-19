@@ -220,8 +220,10 @@
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-full overflow-hidden shadow-lg border border-white/10 ring-2 ring-stellar-500/20">
-            <img id="brandLogo" src="logo.jpg" alt="Logo" class="w-full h-full object-cover" />
+          <div class="w-10 h-10 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 via-purple-500 to-amber-400 shadow-lg shadow-purple-500/20">
+            <div class="w-full h-full rounded-full overflow-hidden bg-[#09090b]">
+              <img id="brandLogo" src="logo.jpg" alt="Logo" class="w-full h-full object-cover" />
+            </div>
           </div>
           <h1 class="text-xl font-semibold tracking-tight text-white" id="brandNameDisplay">
             AnchorFlow
@@ -299,50 +301,50 @@
       <!-- Balance -->
       <div class="glass-card rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.1s; opacity: 0;">
         <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-xl bg-stellar-500/10 flex items-center justify-center">
-            <svg class="w-5 h-5 text-stellar-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <div class="w-9 h-9 rounded-full border border-stellar-500/30 bg-stellar-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(51,129,255,0.15)]">
+            <svg class="w-4 h-4 text-stellar-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
           </div>
-          <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">XLM Balance</span>
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">XLM Balance</span>
         </div>
-        <p id="statBalance" class="text-2xl font-bold text-white">—</p>
+        <p id="statBalance" class="text-2xl font-bold text-white tracking-tight">—</p>
       </div>
       <!-- Total Txns -->
       <div class="glass-card rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.2s; opacity: 0;">
         <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center">
-            <svg class="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <div class="w-9 h-9 rounded-full border border-purple-500/30 bg-purple-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.15)]">
+            <svg class="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
             </svg>
           </div>
-          <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Transactions</span>
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Transactions</span>
         </div>
-        <p id="statTxCount" class="text-2xl font-bold text-white">—</p>
+        <p id="statTxCount" class="text-2xl font-bold text-white tracking-tight">—</p>
       </div>
       <!-- Last Active -->
       <div class="glass-card rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.3s; opacity: 0;">
         <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
-            <svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <div class="w-9 h-9 rounded-full border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
           </div>
-          <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Last Active</span>
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Last Active</span>
         </div>
-        <p id="statLastActive" class="text-2xl font-bold text-white">—</p>
+        <p id="statLastActive" class="text-2xl font-bold text-white tracking-tight">—</p>
       </div>
       <!-- Sequence -->
       <div class="glass-card rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.4s; opacity: 0;">
         <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-            <svg class="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <div class="w-9 h-9 rounded-full border border-amber-500/30 bg-amber-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.15)]">
+            <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
             </svg>
           </div>
-          <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">Sequence</span>
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Sequence</span>
         </div>
-        <p id="statSequence" class="text-2xl font-bold text-white font-mono text-lg">—</p>
+        <p id="statSequence" class="text-xl font-mono text-gray-300 font-medium tracking-wider truncate" title="Sequence Number">—</p>
       </div>
     </section>
 
@@ -406,13 +408,13 @@
         <div class="glass-card rounded-2xl p-6">
           <!-- Header -->
           <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-stellar-500 to-purple-600 flex items-center justify-center shadow-lg shadow-stellar-600/20">
-              <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <div class="w-10 h-10 rounded-full border border-purple-500/30 bg-purple-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.15)]">
+              <svg class="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
               </svg>
             </div>
             <div>
-              <h2 class="text-lg font-semibold text-white">Send Money</h2>
+              <h2 class="text-lg font-semibold text-white tracking-tight">Send Money</h2>
               <p class="text-xs text-gray-500">Soroban Escrow Deposit</p>
             </div>
           </div>
@@ -427,7 +429,7 @@
                 id="txId"
                 placeholder="e.g. tx-remit-001"
                 required
-                class="input-glow w-full px-4 py-2.5 rounded-xl bg-surface-800 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-stellar-500/50 transition-all"
+                class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner"
               />
             </div>
 
@@ -439,7 +441,7 @@
                 id="receiverAddr"
                 placeholder="G..."
                 required
-                class="input-glow w-full px-4 py-2.5 rounded-xl bg-surface-800 border border-white/10 text-white placeholder-gray-600 font-mono text-xs focus:outline-none focus:border-stellar-500/50 transition-all"
+                class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner"
               />
             </div>
 
@@ -451,7 +453,7 @@
                 id="arbiterAddr"
                 placeholder="G..."
                 required
-                class="input-glow w-full px-4 py-2.5 rounded-xl bg-surface-800 border border-white/10 text-white placeholder-gray-600 font-mono text-xs focus:outline-none focus:border-stellar-500/50 transition-all"
+                class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner"
               />
             </div>
 
@@ -466,14 +468,14 @@
                   step="0.0000001"
                   min="0.0000001"
                   required
-                  class="input-glow w-full px-4 py-2.5 rounded-xl bg-surface-800 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-stellar-500/50 transition-all"
+                  class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner"
                 />
               </div>
               <div>
                 <label for="assetSelect" class="block text-xs font-medium text-gray-400 mb-1.5">Asset</label>
                 <select
                   id="assetSelect"
-                  class="w-full px-4 py-2.5 rounded-xl bg-surface-800 border border-white/10 text-white text-sm focus:outline-none focus:border-stellar-500/50 transition-all appearance-none cursor-pointer"
+                  class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all appearance-none cursor-pointer shadow-inner"
                 >
                   <!-- Populated by JS -->
                 </select>
@@ -498,7 +500,7 @@
             <button
               type="submit"
               id="sendBtn"
-              class="btn-shine w-full py-3 rounded-xl bg-gradient-to-r from-stellar-600 to-purple-600 text-white font-semibold text-sm hover:from-stellar-500 hover:to-purple-500 transition-all shadow-lg shadow-stellar-600/25 focus:outline-none focus:ring-2 focus:ring-stellar-500/50 mt-2"
+              class="btn-shine w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold text-sm hover:from-purple-400 hover:to-indigo-400 transition-all shadow-lg shadow-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50 mt-2"
             >
               <span id="sendBtnText" class="flex items-center justify-center gap-2">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -661,7 +663,10 @@
         const xlmBalance = account.balances.find(b => b.asset_type === "native");
         document.getElementById("statBalance").textContent =
           xlmBalance ? parseFloat(xlmBalance.balance).toLocaleString("en-US", { maximumFractionDigits: 4 }) + " XLM" : "0 XLM";
-        document.getElementById("statSequence").textContent = account.sequence;
+        
+        // Ensure the sequence number is truncated nicely to prevent overflow
+        const seq = account.sequence || "";
+        document.getElementById("statSequence").textContent = seq.length > 8 ? "..." + seq.slice(-8) : seq;
 
         // ── Update wallet badge ──
         document.getElementById("walletBadge").classList.remove("hidden");
