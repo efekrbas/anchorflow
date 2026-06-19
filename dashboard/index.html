@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AnchorFlow — Dashboard</title>
-  <meta name="description" content="AnchorFlow micro-remittance dashboard — view transactions, send payments via Stellar Soroban." />
+  <meta name="description"
+    content="AnchorFlow micro-remittance dashboard — view transactions, send payments via Stellar Soroban." />
 
   <!-- Tailwind CSS v3 Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,10 +17,11 @@
   <!-- Google Font: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
 
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="apple-touch-icon" href="logo.jpg" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
 
   <!-- Tailwind Config -->
   <script>
@@ -31,7 +34,7 @@
           },
           colors: {
             stellar: {
-              50:  '#eef6ff',
+              50: '#eef6ff',
               100: '#d9eaff',
               200: '#bcdbff',
               300: '#8ec5ff',
@@ -79,21 +82,25 @@
   <style>
     /* ── Global ─────────────────────────────────── */
     body {
-      background: #09090b; /* Zinc 950 */
-      background-image: 
-        radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-        radial-gradient(at 50% 0%, hsla(225,39%,30%,0.1) 0, transparent 50%), 
-        radial-gradient(at 100% 0%, hsla(339,49%,30%,0.1) 0, transparent 50%);
+      background: #09090b;
+      /* Zinc 950 */
+      background-image:
+        radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+        radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 0.1) 0, transparent 50%),
+        radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 0.1) 0, transparent 50%);
       min-height: 100vh;
     }
 
     /* Ambient animated grid background */
     .bg-grid {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background-size: 40px 40px;
       background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
       mask-image: linear-gradient(to bottom, transparent, black, transparent);
       -webkit-mask-image: linear-gradient(to bottom, transparent, black, transparent);
       pointer-events: none;
@@ -102,26 +109,46 @@
     }
 
     @keyframes gridMove {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(40px); }
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(40px);
+      }
     }
 
     @keyframes float-orb {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      25% { transform: translate(30px, -40px) scale(1.05); }
-      50% { transform: translate(-20px, 20px) scale(0.95); }
-      75% { transform: translate(40px, 30px) scale(1.02); }
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      25% {
+        transform: translate(30px, -40px) scale(1.05);
+      }
+
+      50% {
+        transform: translate(-20px, 20px) scale(0.95);
+      }
+
+      75% {
+        transform: translate(40px, 30px) scale(1.02);
+      }
     }
 
     /* Glassmorphism card */
     .glass-card {
-      background: rgba(24, 24, 27, 0.4); /* Zinc 900 */
+      background: rgba(24, 24, 27, 0.4);
+      /* Zinc 900 */
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border: 1px solid rgba(255, 255, 255, 0.08);
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
+
     .glass-card:hover {
       border-color: rgba(255, 255, 255, 0.15);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -131,6 +158,7 @@
     .tx-row {
       transition: background 0.2s ease, transform 0.15s ease;
     }
+
     .tx-row:hover {
       background: rgba(51, 129, 255, 0.06);
       transform: translateX(4px);
@@ -146,14 +174,20 @@
 
     /* Loading skeleton shimmer */
     .skeleton {
-      background: linear-gradient(90deg, rgba(255,255,255,0.02) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.02) 75%);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 25%, rgba(255, 255, 255, 0.06) 50%, rgba(255, 255, 255, 0.02) 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
       border-radius: 6px;
     }
+
     @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
+      0% {
+        background-position: -200% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
     }
 
     /* CSS Tooltip */
@@ -163,6 +197,7 @@
       align-items: center;
       cursor: help;
     }
+
     .tooltip-container .tooltip-text {
       visibility: hidden;
       opacity: 0;
@@ -185,11 +220,13 @@
       text-transform: none;
       letter-spacing: normal;
     }
+
     .tooltip-container:hover .tooltip-text {
       visibility: visible;
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
+
     .tooltip-container .tooltip-text::after {
       content: "";
       position: absolute;
@@ -207,11 +244,13 @@
       color: #34d399;
       border: 1px solid rgba(16, 185, 129, 0.2);
     }
+
     .badge-pending {
       background: rgba(245, 158, 11, 0.15);
       color: #fbbf24;
       border: 1px solid rgba(245, 158, 11, 0.2);
     }
+
     .badge-error {
       background: rgba(239, 68, 68, 0.15);
       color: #f87171;
@@ -228,23 +267,39 @@
       position: relative;
       overflow: hidden;
     }
+
     .btn-shine::after {
       content: '';
       position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
       transition: left 0.5s ease;
     }
+
     .btn-shine:hover::after {
       left: 100%;
     }
 
     /* Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
 
     /* Toast */
     .toast {
@@ -253,6 +308,7 @@
       transform: translateX(120%);
       transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
     }
+
     .toast.show {
       opacity: 1;
       pointer-events: auto;
@@ -261,10 +317,8 @@
   </style>
 </head>
 
-<body class="font-sans text-gray-200 antialiased overflow-x-hidden"
-      data-brand-name="AnchorFlow"
-      data-logo-src="logo.jpg"
-      data-brand-assets='["XLM", "USDC", "EURC", "TRYB"]'>
+<body class="font-sans text-gray-200 antialiased overflow-x-hidden" data-brand-name="AnchorFlow"
+  data-logo-src="logo.jpg" data-brand-assets='["XLM", "USDC", "EURC", "TRYB"]'>
 
   <!-- Ambient Background -->
   <div class="bg-grid"></div>
@@ -277,7 +331,8 @@
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 via-purple-500 to-amber-400 shadow-lg shadow-purple-500/20">
+          <div
+            class="w-10 h-10 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 via-purple-500 to-amber-400 shadow-lg shadow-purple-500/20">
             <div class="w-full h-full rounded-full overflow-hidden bg-[#09090b]">
               <img id="brandLogo" src="logo.jpg" alt="Logo" class="w-full h-full object-cover" />
             </div>
@@ -293,9 +348,12 @@
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-slow"></span>
             <span class="text-xs font-medium text-emerald-400">Testnet</span>
           </div>
-          <div id="walletBadge" class="hidden items-center gap-2 px-3 py-1.5 rounded-full bg-surface-700 border border-white/5">
-            <svg class="w-3.5 h-3.5 text-stellar-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+          <div id="walletBadge"
+            class="hidden items-center gap-2 px-3 py-1.5 rounded-full bg-surface-700 border border-white/5">
+            <svg class="w-3.5 h-3.5 text-stellar-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
             <span id="walletBadgeText" class="text-xs font-mono text-gray-400"></span>
           </div>
@@ -312,7 +370,7 @@
     <!-- ─── CONNECT WALLET SECTION ─────────────────────────── -->
     <section id="connectSection" class="animate-fade-in">
       <div class="glass-card rounded-2xl p-8 sm:p-10 border border-white/5">
-        
+
         <div class="mb-8">
           <p class="text-[11px] font-bold tracking-widest text-teal-400 uppercase mb-3">
             Operations Desk
@@ -330,21 +388,14 @@
             <label for="walletAddress" class="block text-xs font-semibold text-gray-400 mb-2">
               Stellar Wallet Address
             </label>
-            <input
-              type="text"
-              id="walletAddress"
-              placeholder="G... (Enter your Stellar public key)"
-              class="w-full px-5 py-3.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner"
-            />
+            <input type="text" id="walletAddress" placeholder="G... (Enter your Stellar public key)"
+              class="w-full px-5 py-3.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner" />
           </div>
-          <button
-            id="connectBtn"
-            onclick="connectWallet()"
-            class="btn-shine w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold text-sm hover:from-cyan-400 hover:to-blue-400 transition-all shadow-lg shadow-cyan-500/20 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 shrink-0"
-          >
+          <button id="connectBtn" onclick="connectWallet()"
+            class="btn-shine w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold text-sm hover:from-cyan-400 hover:to-blue-400 transition-all shadow-lg shadow-cyan-500/20 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 shrink-0">
             <span id="connectBtnText" class="flex items-center justify-center gap-2">
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               Load Transactions
             </span>
@@ -358,9 +409,12 @@
       <!-- Balance -->
       <div class="glass-card rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.1s; opacity: 0;">
         <div class="flex items-center gap-3 mb-3">
-          <div class="w-9 h-9 rounded-full border border-stellar-500/30 bg-stellar-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(51,129,255,0.15)]">
-            <svg class="w-4 h-4 text-stellar-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          <div
+            class="w-9 h-9 rounded-full border border-stellar-500/30 bg-stellar-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(51,129,255,0.15)]">
+            <svg class="w-4 h-4 text-stellar-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
           <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">XLM Balance</span>
@@ -370,9 +424,11 @@
       <!-- Total Txns -->
       <div class="glass-card rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.2s; opacity: 0;">
         <div class="flex items-center gap-3 mb-3">
-          <div class="w-9 h-9 rounded-full border border-purple-500/30 bg-purple-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.15)]">
+          <div
+            class="w-9 h-9 rounded-full border border-purple-500/30 bg-purple-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.15)]">
             <svg class="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
             </svg>
           </div>
           <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Transactions</span>
@@ -382,9 +438,11 @@
       <!-- Last Active -->
       <div class="glass-card rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.3s; opacity: 0;">
         <div class="flex items-center gap-3 mb-3">
-          <div class="w-9 h-9 rounded-full border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.15)]">
-            <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          <div
+            class="w-9 h-9 rounded-full border border-emerald-500/30 bg-emerald-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+            <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
           <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Last Active</span>
@@ -394,20 +452,26 @@
       <!-- Sequence -->
       <div class="glass-card rounded-2xl p-5 animate-slide-up" style="animation-delay: 0.4s; opacity: 0;">
         <div class="flex items-center gap-3 mb-3">
-          <div class="w-9 h-9 rounded-full border border-amber-500/30 bg-amber-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.15)]">
+          <div
+            class="w-9 h-9 rounded-full border border-amber-500/30 bg-amber-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.15)]">
             <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
             </svg>
           </div>
           <span class="tooltip-container">
             <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest flex items-center gap-1">
               Sequence
-              <svg class="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <svg class="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
             </span>
             <span class="tooltip-text">A unique incremental number ensuring transactions are submitted in order.</span>
           </span>
         </div>
-        <p id="statSequence" class="text-xl font-mono text-gray-300 font-medium tracking-wider truncate" title="Sequence Number">—</p>
+        <p id="statSequence" class="text-xl font-mono text-gray-300 font-medium tracking-wider truncate"
+          title="Sequence Number">—</p>
       </div>
     </section>
 
@@ -420,17 +484,18 @@
           <!-- Header -->
           <div class="px-6 py-4 border-b border-white/5 flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <svg class="w-5 h-5 text-stellar-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+              <svg class="w-5 h-5 text-stellar-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
               <h2 class="text-lg font-semibold text-white">Transaction History</h2>
             </div>
-            <button
-              onclick="connectWallet()"
-              class="text-xs text-stellar-400 hover:text-stellar-300 transition-colors flex items-center gap-1"
-            >
+            <button onclick="connectWallet()"
+              class="text-xs text-stellar-400 hover:text-stellar-300 transition-colors flex items-center gap-1">
               <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
               Refresh
             </button>
@@ -441,20 +506,42 @@
             <table class="w-full text-sm">
               <thead>
                 <tr class="border-b border-white/5">
-                  <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                  <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status
+                  </th>
                   <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Hash</th>
                   <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Type</th>
                   <th class="px-6 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Fee</th>
-                  <th class="px-6 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Date</th>
+                  <th class="px-6 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Date
+                  </th>
                 </tr>
               </thead>
               <tbody id="txTableBody">
                 <!-- Loading skeletons (replaced by JS) -->
-                <tr><td colspan="5" class="px-6 py-4"><div class="skeleton h-6 w-full"></div></td></tr>
-                <tr><td colspan="5" class="px-6 py-4"><div class="skeleton h-6 w-full"></div></td></tr>
-                <tr><td colspan="5" class="px-6 py-4"><div class="skeleton h-6 w-full"></div></td></tr>
-                <tr><td colspan="5" class="px-6 py-4"><div class="skeleton h-6 w-full"></div></td></tr>
-                <tr><td colspan="5" class="px-6 py-4"><div class="skeleton h-6 w-full"></div></td></tr>
+                <tr>
+                  <td colspan="5" class="px-6 py-4">
+                    <div class="skeleton h-6 w-full"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="5" class="px-6 py-4">
+                    <div class="skeleton h-6 w-full"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="5" class="px-6 py-4">
+                    <div class="skeleton h-6 w-full"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="5" class="px-6 py-4">
+                    <div class="skeleton h-6 w-full"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="5" class="px-6 py-4">
+                    <div class="skeleton h-6 w-full"></div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -471,9 +558,11 @@
         <div class="glass-card rounded-2xl p-6">
           <!-- Header -->
           <div class="flex items-center gap-3 mb-6">
-            <div class="w-10 h-10 rounded-full border border-purple-500/30 bg-purple-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.15)]">
-              <svg class="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            <div
+              class="w-10 h-10 rounded-full border border-purple-500/30 bg-purple-500/10 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.15)]">
+              <svg class="w-4 h-4 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
               </svg>
             </div>
             <div>
@@ -487,25 +576,15 @@
             <!-- Transaction ID -->
             <div>
               <label for="txId" class="block text-xs font-medium text-gray-400 mb-1.5">Transaction ID</label>
-              <input
-                type="text"
-                id="txId"
-                placeholder="e.g. tx-remit-001"
-                required
-                class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner"
-              />
+              <input type="text" id="txId" placeholder="e.g. tx-remit-001" required
+                class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner" />
             </div>
 
             <!-- Receiver Address -->
             <div>
               <label for="receiverAddr" class="block text-xs font-medium text-gray-400 mb-1.5">Receiver Address</label>
-              <input
-                type="text"
-                id="receiverAddr"
-                placeholder="G..."
-                required
-                class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner"
-              />
+              <input type="text" id="receiverAddr" placeholder="G..." required
+                class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner" />
             </div>
 
             <!-- Arbiter Address -->
@@ -513,39 +592,30 @@
               <label for="arbiterAddr" class="tooltip-container block mb-1.5 text-left">
                 <span class="text-xs font-medium text-gray-400 flex items-center gap-1">
                   Arbiter (Compliance)
-                  <svg class="w-3.5 h-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <svg class="w-3.5 h-3.5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
                 </span>
-                <span class="tooltip-text">The designated third-party who can approve or release locked funds based on compliance rules.</span>
+                <span class="tooltip-text">The designated third-party who can approve or release locked funds based on
+                  compliance rules.</span>
               </label>
-              <input
-                type="text"
-                id="arbiterAddr"
-                placeholder="G..."
-                required
-                class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner"
-              />
+              <input type="text" id="arbiterAddr" placeholder="G..." required
+                class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-xs focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner" />
             </div>
 
             <!-- Amount + Asset -->
             <div class="grid grid-cols-2 gap-3">
               <div>
                 <label for="sendAmount" class="block text-xs font-medium text-gray-400 mb-1.5">Amount</label>
-                <input
-                  type="number"
-                  id="sendAmount"
-                  placeholder="100.00"
-                  step="0.0000001"
-                  min="0.0000001"
-                  required
-                  class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner"
-                />
+                <input type="number" id="sendAmount" placeholder="100.00" step="0.0000001" min="0.0000001" required
+                  class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white placeholder-gray-600 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all shadow-inner" />
               </div>
               <div>
                 <label for="assetSelect" class="block text-xs font-medium text-gray-400 mb-1.5">Asset</label>
-                <select
-                  id="assetSelect"
-                  class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all appearance-none cursor-pointer shadow-inner"
-                >
+                <select id="assetSelect"
+                  class="w-full px-4 py-2.5 rounded-xl bg-[#0f1523]/80 border border-stellar-500/20 text-white font-mono text-sm focus:outline-none focus:ring-2 focus:ring-stellar-500/40 focus:border-stellar-500/50 transition-all appearance-none cursor-pointer shadow-inner">
                   <!-- Populated by JS -->
                 </select>
               </div>
@@ -554,26 +624,16 @@
             <!-- Platform Fee -->
             <div>
               <label for="platformFee" class="block text-xs font-medium text-gray-400 mb-1.5">Platform Fee</label>
-              <input
-                type="number"
-                id="platformFee"
-                placeholder="1.00"
-                step="0.0000001"
-                min="0"
-                value="1"
-                class="input-glow w-full px-4 py-2.5 rounded-xl bg-surface-800 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-stellar-500/50 transition-all"
-              />
+              <input type="number" id="platformFee" placeholder="1.00" step="0.0000001" min="0" value="1"
+                class="input-glow w-full px-4 py-2.5 rounded-xl bg-surface-800 border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-stellar-500/50 transition-all" />
             </div>
 
             <!-- Submit Button -->
-            <button
-              type="submit"
-              id="sendBtn"
-              class="btn-shine w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold text-sm hover:from-purple-400 hover:to-indigo-400 transition-all shadow-lg shadow-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50 mt-2"
-            >
+            <button type="submit" id="sendBtn"
+              class="btn-shine w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-semibold text-sm hover:from-purple-400 hover:to-indigo-400 transition-all shadow-lg shadow-purple-500/20 focus:outline-none focus:ring-2 focus:ring-purple-500/50 mt-2">
               <span id="sendBtnText" class="flex items-center justify-center gap-2">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
                 Deposit to Escrow
               </span>
@@ -599,42 +659,60 @@
       <div class="text-center mb-12">
         <p class="text-[11px] font-bold tracking-widest text-purple-400 uppercase mb-3">Why AnchorFlow</p>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-3">Built for modern settlement</h2>
-        <p class="text-gray-500 text-sm max-w-lg mx-auto">Programmable escrow, real-time visibility, and multi-asset rails — all powered by Stellar Soroban smart contracts.</p>
+        <p class="text-gray-500 text-sm max-w-lg mx-auto">Programmable escrow, real-time visibility, and multi-asset
+          rails — all powered by Stellar Soroban smart contracts.</p>
       </div>
 
       <!-- Feature Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Card 1 -->
-        <div class="glass-card rounded-2xl p-6 border border-white/5 group hover:border-cyan-500/20 transition-all duration-500 hover:shadow-[0_0_40px_rgba(34,211,238,0.08)] animate-slide-up" style="animation-delay: 0.4s; opacity: 0;">
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
+        <div
+          class="glass-card rounded-2xl p-6 border border-white/5 group hover:border-cyan-500/20 transition-all duration-500 hover:shadow-[0_0_40px_rgba(34,211,238,0.08)] animate-slide-up"
+          style="animation-delay: 0.4s; opacity: 0;">
+          <div
+            class="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 border border-cyan-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
             <svg class="w-6 h-6 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
             </svg>
           </div>
           <h3 class="text-white font-semibold text-base mb-2">Soroban Escrow</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Funds are locked on-chain via Soroban smart contracts. Only the designated arbiter can release — no third-party risk.</p>
+          <p class="text-gray-500 text-sm leading-relaxed">Funds are locked on-chain via Soroban smart contracts. Only
+            the designated arbiter can release — no third-party risk.</p>
         </div>
 
         <!-- Card 2 -->
-        <div class="glass-card rounded-2xl p-6 border border-white/5 group hover:border-purple-500/20 transition-all duration-500 hover:shadow-[0_0_40px_rgba(168,85,247,0.08)] animate-slide-up" style="animation-delay: 0.55s; opacity: 0;">
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
-            <svg class="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/>
+        <div
+          class="glass-card rounded-2xl p-6 border border-white/5 group hover:border-purple-500/20 transition-all duration-500 hover:shadow-[0_0_40px_rgba(168,85,247,0.08)] animate-slide-up"
+          style="animation-delay: 0.55s; opacity: 0;">
+          <div
+            class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
+            <svg class="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
             </svg>
           </div>
           <h3 class="text-white font-semibold text-base mb-2">Real-Time Tracking</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Monitor every transaction with live status updates, relative timestamps, and clickable explorer links.</p>
+          <p class="text-gray-500 text-sm leading-relaxed">Monitor every transaction with live status updates, relative
+            timestamps, and clickable explorer links.</p>
         </div>
 
         <!-- Card 3 -->
-        <div class="glass-card rounded-2xl p-6 border border-white/5 group hover:border-amber-500/20 transition-all duration-500 hover:shadow-[0_0_40px_rgba(245,158,11,0.08)] animate-slide-up" style="animation-delay: 0.7s; opacity: 0;">
-          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
-            <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/>
+        <div
+          class="glass-card rounded-2xl p-6 border border-white/5 group hover:border-amber-500/20 transition-all duration-500 hover:shadow-[0_0_40px_rgba(245,158,11,0.08)] animate-slide-up"
+          style="animation-delay: 0.7s; opacity: 0;">
+          <div
+            class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 border border-amber-500/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-500">
+            <svg class="w-6 h-6 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
             </svg>
           </div>
           <h3 class="text-white font-semibold text-base mb-2">Multi-Asset Rails</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">Support for XLM, USDC, EURC, TRYB and more. Send any Stellar-based asset through the same escrow pipeline.</p>
+          <p class="text-gray-500 text-sm leading-relaxed">Support for XLM, USDC, EURC, TRYB and more. Send any
+            Stellar-based asset through the same escrow pipeline.</p>
         </div>
       </div>
     </section>
@@ -648,11 +726,14 @@
 
       <div class="relative flex flex-col md:flex-row items-center justify-center gap-8 md:gap-4">
         <!-- Connecting line (desktop) -->
-        <div class="hidden md:block absolute top-1/2 left-[20%] right-[20%] h-px bg-gradient-to-r from-cyan-500/30 via-purple-500/30 to-emerald-500/30"></div>
+        <div
+          class="hidden md:block absolute top-1/2 left-[20%] right-[20%] h-px bg-gradient-to-r from-cyan-500/30 via-purple-500/30 to-emerald-500/30">
+        </div>
 
         <!-- Step 1 -->
         <div class="relative z-10 flex flex-col items-center text-center max-w-[220px]">
-          <div class="w-14 h-14 rounded-full bg-[#0a0e1a] border-2 border-cyan-500/40 flex items-center justify-center mb-4 shadow-[0_0_25px_rgba(34,211,238,0.15)]">
+          <div
+            class="w-14 h-14 rounded-full bg-[#0a0e1a] border-2 border-cyan-500/40 flex items-center justify-center mb-4 shadow-[0_0_25px_rgba(34,211,238,0.15)]">
             <span class="text-cyan-400 font-bold text-lg">1</span>
           </div>
           <h4 class="text-white font-semibold text-sm mb-1">Connect Wallet</h4>
@@ -661,7 +742,8 @@
 
         <!-- Step 2 -->
         <div class="relative z-10 flex flex-col items-center text-center max-w-[220px]">
-          <div class="w-14 h-14 rounded-full bg-[#0a0e1a] border-2 border-purple-500/40 flex items-center justify-center mb-4 shadow-[0_0_25px_rgba(168,85,247,0.15)]">
+          <div
+            class="w-14 h-14 rounded-full bg-[#0a0e1a] border-2 border-purple-500/40 flex items-center justify-center mb-4 shadow-[0_0_25px_rgba(168,85,247,0.15)]">
             <span class="text-purple-400 font-bold text-lg">2</span>
           </div>
           <h4 class="text-white font-semibold text-sm mb-1">Deposit to Escrow</h4>
@@ -670,7 +752,8 @@
 
         <!-- Step 3 -->
         <div class="relative z-10 flex flex-col items-center text-center max-w-[220px]">
-          <div class="w-14 h-14 rounded-full bg-[#0a0e1a] border-2 border-emerald-500/40 flex items-center justify-center mb-4 shadow-[0_0_25px_rgba(16,185,129,0.15)]">
+          <div
+            class="w-14 h-14 rounded-full bg-[#0a0e1a] border-2 border-emerald-500/40 flex items-center justify-center mb-4 shadow-[0_0_25px_rgba(16,185,129,0.15)]">
             <span class="text-emerald-400 font-bold text-lg">3</span>
           </div>
           <h4 class="text-white font-semibold text-sm mb-1">Arbiter Releases</h4>
@@ -685,16 +768,20 @@
   <!-- FLOATING ORBS (ambient decoration)                      -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <div class="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
-    <div class="absolute w-[500px] h-[500px] rounded-full opacity-[0.03] bg-cyan-400 blur-[120px]" style="top: 60%; left: -10%; animation: float-orb 20s ease-in-out infinite;"></div>
-    <div class="absolute w-[400px] h-[400px] rounded-full opacity-[0.04] bg-purple-500 blur-[100px]" style="top: 30%; right: -8%; animation: float-orb 25s ease-in-out infinite reverse;"></div>
-    <div class="absolute w-[350px] h-[350px] rounded-full opacity-[0.03] bg-amber-400 blur-[100px]" style="bottom: -5%; left: 40%; animation: float-orb 22s ease-in-out infinite 3s;"></div>
+    <div class="absolute w-[500px] h-[500px] rounded-full opacity-[0.03] bg-cyan-400 blur-[120px]"
+      style="top: 60%; left: -10%; animation: float-orb 20s ease-in-out infinite;"></div>
+    <div class="absolute w-[400px] h-[400px] rounded-full opacity-[0.04] bg-purple-500 blur-[100px]"
+      style="top: 30%; right: -8%; animation: float-orb 25s ease-in-out infinite reverse;"></div>
+    <div class="absolute w-[350px] h-[350px] rounded-full opacity-[0.03] bg-amber-400 blur-[100px]"
+      style="bottom: -5%; left: 40%; animation: float-orb 22s ease-in-out infinite 3s;"></div>
   </div>
 
   <!-- ═══════════════════════════════════════════════════════ -->
   <!-- FOOTER                                                  -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <footer id="siteFooter" class="relative z-10 border-t border-white/5 mt-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-2">
         <div class="w-6 h-6 rounded-full overflow-hidden">
           <img src="logo.jpg" alt="AnchorFlow" class="w-full h-full object-cover" />
@@ -702,9 +789,12 @@
         <span class="text-xs text-gray-500">© 2026 AnchorFlow. Powered by Stellar.</span>
       </div>
       <div class="flex items-center gap-6">
-        <a href="https://stellar.org" target="_blank" class="text-xs text-gray-600 hover:text-stellar-400 transition-colors">Stellar.org</a>
-        <a href="https://soroban.stellar.org" target="_blank" class="text-xs text-gray-600 hover:text-purple-400 transition-colors">Soroban Docs</a>
-        <a href="https://stellar.expert" target="_blank" class="text-xs text-gray-600 hover:text-emerald-400 transition-colors">Explorer</a>
+        <a href="https://stellar.org" target="_blank"
+          class="text-xs text-gray-600 hover:text-stellar-400 transition-colors">Stellar.org</a>
+        <a href="https://soroban.stellar.org" target="_blank"
+          class="text-xs text-gray-600 hover:text-purple-400 transition-colors">Soroban Docs</a>
+        <a href="https://stellar.expert" target="_blank"
+          class="text-xs text-gray-600 hover:text-emerald-400 transition-colors">Explorer</a>
       </div>
     </div>
   </footer>
@@ -821,8 +911,8 @@
 
       const icons = {
         success: `<svg class="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
-        error:   `<svg class="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
-        info:    `<svg class="w-5 h-5 text-stellar-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+        error: `<svg class="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+        info: `<svg class="w-5 h-5 text-stellar-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
       };
 
       toastIcon.innerHTML = icons[type] || icons.info;
@@ -860,7 +950,7 @@
       if (featEl) featEl.style.display = "none";
       if (howEl) howEl.style.display = "none";
       if (footEl) footEl.style.display = "none";
-      
+
       const setSkeleton = (id) => {
         document.getElementById(id).innerHTML = '<div class="skeleton h-8 w-24"></div>';
       };
@@ -900,7 +990,7 @@
         const xlmBalance = account.balances.find(b => b.asset_type === "native");
         document.getElementById("statBalance").textContent =
           xlmBalance ? parseFloat(xlmBalance.balance).toLocaleString("en-US", { maximumFractionDigits: 4 }) + " XLM" : "0 XLM";
-        
+
         const seq = account.sequence || "";
         document.getElementById("statSequence").textContent = seq.length > 8 ? "..." + seq.slice(-8) : seq;
 
@@ -1046,13 +1136,13 @@
     async function handleSendMoney(event) {
       event.preventDefault();
 
-      const txId         = document.getElementById("txId").value.trim();
-      const receiver     = document.getElementById("receiverAddr").value.trim();
-      const arbiter      = document.getElementById("arbiterAddr").value.trim();
-      const amount       = document.getElementById("sendAmount").value;
-      const asset        = document.getElementById("assetSelect").value;
-      const platformFee  = document.getElementById("platformFee").value || "0";
-      const sender       = document.getElementById("walletAddress").value.trim();
+      const txId = document.getElementById("txId").value.trim();
+      const receiver = document.getElementById("receiverAddr").value.trim();
+      const arbiter = document.getElementById("arbiterAddr").value.trim();
+      const amount = document.getElementById("sendAmount").value;
+      const asset = document.getElementById("assetSelect").value;
+      const platformFee = document.getElementById("platformFee").value || "0";
+      const sender = document.getElementById("walletAddress").value.trim();
 
       // ── Validate ──
       if (!sender || !sender.startsWith("G")) {
@@ -1201,7 +1291,7 @@
      * @returns {string}  e.g. "Jun 12, 2026 · 04:30"
      */
     function formatDate(date) {
-      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       const month = months[date.getMonth()];
       const day = date.getDate();
       const year = date.getFullYear();
@@ -1243,5 +1333,5 @@
   </script>
 
 </body>
-</html>
 
+</html>
