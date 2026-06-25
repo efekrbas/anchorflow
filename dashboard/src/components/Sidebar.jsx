@@ -74,6 +74,7 @@ const Sidebar = ({ activeTab, setActiveTab, isOpen, onClose }) => {
         </a>
       </div>
     </aside>
+    </>
   );
 };
 
