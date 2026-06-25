@@ -24,7 +24,7 @@ const Header = ({ address, isConnecting, onConnect, onDisconnect }) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-surface-900/80 backdrop-blur-md border-b border-white/5 py-4 px-6 md:px-8">
+    <header className="sticky top-0 z-40 bg-surface-900/50 backdrop-blur-xl border-b border-white/5 py-4 px-6 md:px-8">
       <div className="flex items-center justify-end max-w-7xl mx-auto">
         <div className="flex items-center gap-4">
           <div className="relative" ref={notificationRef}>
