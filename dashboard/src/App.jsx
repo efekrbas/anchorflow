@@ -80,8 +80,6 @@ function App() {
           const userAddress = typeof accessResponse === 'object' ? (accessResponse.address || accessResponse.publicKey || '') : accessResponse;
           if (userAddress) {
             setAddress(String(userAddress));
-            setMetrics(getInitialMockMetrics());
-            setTransactions(getInitialMockTransactions(userAddress));
           }
         }
       } catch (e) {
@@ -90,6 +88,21 @@ function App() {
     };
     checkConnection();
   }, []);
+
+  useEffect(() => {
+    if (!address) return;
+    
+    if (network === 'Mainnet') {
+      setMetrics({ balance: "0.00", totalTx: 0 });
+      setTransactions([]);
+    } else if (network === 'Futurenet') {
+      setMetrics({ balance: "5,000.00", totalTx: 3 });
+      setTransactions([]);
+    } else {
+      setMetrics(getInitialMockMetrics());
+      setTransactions(getInitialMockTransactions(address));
+    }
+  }, [network, address]);
 
   const handleDisconnect = () => {
     setAddress(null);
@@ -104,9 +117,6 @@ function App() {
       const accessResponse = await requestAccess();
       const userAddress = typeof accessResponse === 'object' ? (accessResponse.address || accessResponse.publicKey || '') : accessResponse;
       setAddress(String(userAddress));
-      
-      setMetrics(getInitialMockMetrics());
-      setTransactions(getInitialMockTransactions(userAddress));
     } catch (e) {
       console.error("Failed to connect Freighter:", e);
       showToast("Failed to connect wallet. Please ensure Freighter is installed and unlocked.", "error");
