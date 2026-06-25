@@ -7,6 +7,7 @@ import Header from './components/Header';
 import MetricCard from './components/MetricCard';
 import TransactionTable from './components/TransactionTable';
 import SendPaymentModal from './components/SendPaymentModal';
+import CommandPalette from './components/CommandPalette';
 
 function App() {
   const [address, setAddress] = useState(null);
@@ -28,6 +29,34 @@ function App() {
     totalTx: 0,
   });
   const [transactions, setTransactions] = useState([]);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [xlmPrice, setXlmPrice] = useState(null);
+
+  useEffect(() => {
+    const fetchPrice = async () => {
+      try {
+        const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd');
+        const data = await res.json();
+        if (data && data.stellar) {
+          setXlmPrice(data.stellar.usd);
+        }
+      } catch (e) {
+        console.error("Failed to fetch XLM price", e);
+      }
+    };
+    fetchPrice();
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   useEffect(() => {
     // Check if Freighter is already connected
@@ -174,6 +203,7 @@ function App() {
                   <MetricCard 
                     title="Total Balance" 
                     value={address ? `${metrics.balance} XLM` : '---'} 
+                    subtext={address && xlmPrice ? `~ $${(parseFloat(metrics.balance.replace(/,/g, '')) * xlmPrice).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD` : ''}
                     icon={Wallet}
                     delayClass="animate-slide-up"
                     style={{ animationDelay: '100ms' }}
@@ -262,6 +292,16 @@ function App() {
         onClose={() => setIsSendModalOpen(false)} 
         onSend={handleSendPayment}
         isSending={isSending}
+      />
+
+      <CommandPalette 
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onNavigate={setActiveTab}
+        onSendPayment={() => {
+          setIsCommandPaletteOpen(false);
+          setIsSendModalOpen(true);
+        }}
       />
 
       {/* Toast Notification */}

@@ -115,4 +115,27 @@
   .btn-primary:hover::after {
     transform: rotate(45deg) translateX(100%);
   }
+
+  /* Spotlight Hover Effect */
+  .hover-spotlight {
+    position: relative;
+  }
+  
+  .spotlight-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(
+      600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+      rgba(51, 129, 255, 0.1),
+      transparent 40%
+    );
+    z-index: 1;
+  }
+  
+  .hover-spotlight:hover .spotlight-overlay {
+    opacity: 1;
+  }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Wallet, Bell, Loader2, LogOut, Menu } from 'lucide-react';
+import { Wallet, Bell, Loader2, LogOut, Menu, Check } from 'lucide-react';
 import clsx from 'clsx';
 
 const Header = ({ address, isConnecting, onConnect, onDisconnect, onToggleSidebar }) => {
@@ -19,6 +19,15 @@ const Header = ({ address, isConnecting, onConnect, onDisconnect, onToggleSideba
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  const [isCopied, setIsCopied] = useState(false);
+  const handleCopy = () => {
+    if (!address) return;
+    const strAddr = typeof address === 'object' ? (address.publicKey || address.address || '') : String(address);
+    navigator.clipboard.writeText(strAddr);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
+
   const formatAddress = (addr) => {
     if (!addr) return '';
     const strAddr = typeof addr === 'object' ? (addr.publicKey || addr.address || JSON.stringify(addr)) : String(addr);
@@ -74,10 +83,20 @@ const Header = ({ address, isConnecting, onConnect, onDisconnect, onToggleSideba
 
           {address ? (
             <div className="flex items-center gap-2">
-              <div className="glass-card flex items-center gap-2 px-4 py-2 rounded-full">
-                <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
-                <span className="text-sm font-medium text-zinc-200">{formatAddress(address)}</span>
-              </div>
+              <button 
+                onClick={handleCopy}
+                className="glass-card flex items-center gap-2 px-4 py-2 rounded-full hover:bg-white/10 transition-colors group cursor-pointer"
+                title="Copy Address"
+              >
+                {isCopied ? (
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                ) : (
+                  <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)] group-hover:shadow-[0_0_12px_rgba(34,197,94,0.8)] transition-shadow"></div>
+                )}
+                <span className={clsx("text-sm font-medium transition-colors", isCopied ? "text-emerald-400" : "text-zinc-200")}>
+                  {isCopied ? "Copied" : formatAddress(address)}
+                </span>
+              </button>
               <button 
                 onClick={onDisconnect}
                 className="p-2 rounded-full hover:bg-red-500/20 text-zinc-400 hover:text-red-400 transition-colors"
