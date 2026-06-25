@@ -25,14 +25,7 @@ const Header = ({ address, isConnecting, onConnect, onDisconnect }) => {
 
   return (
     <header className="sticky top-0 z-40 bg-surface-900/80 backdrop-blur-md border-b border-white/5 py-4 px-6 md:px-8">
-      <div className="flex items-center justify-between max-w-7xl mx-auto">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white animate-fade-in">Overview</h1>
-          <p className="text-sm text-zinc-400 mt-1 animate-fade-in" style={{ animationDelay: '100ms' }}>
-            Welcome back to AnchorFlow
-          </p>
-        </div>
-
+      <div className="flex items-center justify-end max-w-7xl mx-auto">
         <div className="flex items-center gap-4">
           <div className="relative" ref={notificationRef}>
             <button 
