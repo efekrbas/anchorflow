@@ -937,7 +937,17 @@
             const isConn = typeof isConnResult === 'object' ? isConnResult.isConnected : isConnResult;
             
             if (isConn) {
-              walletAddress = await api.getPublicKey();
+              if (api.requestAccess) {
+                const res = await api.requestAccess();
+                if (res.error) throw new Error(res.error);
+                walletAddress = res.address;
+              } else if (api.getAddress) {
+                const res = await api.getAddress();
+                if (res.error) throw new Error(res.error);
+                walletAddress = res.address;
+              } else if (api.getPublicKey) {
+                walletAddress = await api.getPublicKey();
+              }
               document.getElementById("walletAddress").value = walletAddress;
             } else {
               showToast("error", "Wallet Not Connected", "Please ensure Freighter is installed and unlocked.");
