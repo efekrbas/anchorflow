@@ -45,9 +45,17 @@ const SendPaymentModal = ({ isOpen, onClose, onSend, isSending }) => {
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
               placeholder="G..."
-              className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-stellar-500/50 focus:border-stellar-500/50 transition-all font-mono text-sm"
+              className={clsx(
+                "w-full bg-black/40 border rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:ring-2 transition-all font-mono text-sm",
+                destination && !/^G[A-Z0-9]{55}$/.test(destination)
+                  ? "border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50"
+                  : "border-white/10 focus:ring-stellar-500/50 focus:border-stellar-500/50"
+              )}
               required
             />
+            {destination && !/^G[A-Z0-9]{55}$/.test(destination) && (
+              <p className="text-red-400 text-xs mt-1.5 ml-1">Must be a valid 56-character Stellar public key starting with G.</p>
+            )}
           </div>
 
           <div>
@@ -79,10 +87,10 @@ const SendPaymentModal = ({ isOpen, onClose, onSend, isSending }) => {
           <div className="mt-6">
             <button
               type="submit"
-              disabled={isSending || !destination || !amount}
+              disabled={isSending || !destination || !amount || !/^G[A-Z0-9]{55}$/.test(destination)}
               className={clsx(
                 "w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-white transition-all shadow-lg",
-                isSending || !destination || !amount
+                isSending || !destination || !amount || !/^G[A-Z0-9]{55}$/.test(destination)
                   ? "bg-stellar-600/50 cursor-not-allowed"
                   : "bg-stellar-600 hover:bg-stellar-500 hover:shadow-[0_0_20px_rgba(51,129,255,0.4)] hover:-translate-y-0.5 btn-primary"
               )}
