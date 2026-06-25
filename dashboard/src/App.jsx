@@ -65,6 +65,16 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const titles = {
+      dashboard: 'Dashboard',
+      transfer: 'Transfer',
+      history: 'Transaction History',
+      settings: 'Settings'
+    };
+    document.title = `AnchorFlow — ${titles[activeTab] || 'Dashboard'}`;
+  }, [activeTab]);
+
+  useEffect(() => {
     // Check if Freighter is already connected
     const checkConnection = async () => {
       try {
