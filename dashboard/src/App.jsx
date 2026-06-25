@@ -8,6 +8,7 @@ import MetricCard from './components/MetricCard';
 import TransactionTable from './components/TransactionTable';
 import SendPaymentModal from './components/SendPaymentModal';
 import CommandPalette from './components/CommandPalette';
+import SettingsPanel from './components/SettingsPanel';
 
 function App() {
   const [address, setAddress] = useState(null);
@@ -31,21 +32,26 @@ function App() {
   const [transactions, setTransactions] = useState([]);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [xlmPrice, setXlmPrice] = useState(null);
+  
+  const [network, setNetwork] = useState('Testnet');
+  const [fiatCurrency, setFiatCurrency] = useState('usd');
+  const currencySymbols = { usd: '$', eur: '€', try: '₺' };
+  const currentSymbol = currencySymbols[fiatCurrency] || '$';
 
   useEffect(() => {
     const fetchPrice = async () => {
       try {
-        const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=usd');
+        const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=stellar&vs_currencies=${fiatCurrency}`);
         const data = await res.json();
         if (data && data.stellar) {
-          setXlmPrice(data.stellar.usd);
+          setXlmPrice(data.stellar[fiatCurrency]);
         }
       } catch (e) {
         console.error("Failed to fetch XLM price", e);
       }
     };
     fetchPrice();
-  }, []);
+  }, [fiatCurrency]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -203,7 +209,7 @@ function App() {
                   <MetricCard 
                     title="Total Balance" 
                     value={address ? `${metrics.balance} XLM` : '---'} 
-                    subtext={address && xlmPrice ? `~ $${(parseFloat(metrics.balance.replace(/,/g, '')) * xlmPrice).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD` : ''}
+                    subtext={address && xlmPrice ? `~ ${currentSymbol}${(parseFloat(metrics.balance.replace(/,/g, '')) * xlmPrice).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${fiatCurrency.toUpperCase()}` : ''}
                     icon={Wallet}
                     delayClass="animate-slide-up"
                     style={{ animationDelay: '100ms' }}
@@ -218,7 +224,7 @@ function App() {
                   />
                   <MetricCard 
                     title="Network Status" 
-                    value="Testnet" 
+                    value={network} 
                     icon={Activity}
                     delayClass="animate-slide-up"
                     style={{ animationDelay: '300ms' }}
@@ -270,17 +276,12 @@ function App() {
             )}
 
             {activeTab === 'settings' && (
-              <div className="animate-fade-in">
-                 <div className="mb-6">
-                  <h2 className="text-3xl font-bold text-white tracking-tight">Settings</h2>
-                  <p className="text-zinc-400 mt-1">Manage your account and preferences.</p>
-                </div>
-                <div className="glass-card rounded-2xl p-8 border border-white/10 text-center py-20">
-                  <ShieldCheck className="w-12 h-12 text-zinc-500 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-white">Settings panel coming soon!</h3>
-                  <p className="text-zinc-400 mt-2">More configurations will be added here in the future.</p>
-                </div>
-              </div>
+              <SettingsPanel 
+                network={network} 
+                setNetwork={setNetwork} 
+                fiatCurrency={fiatCurrency} 
+                setFiatCurrency={setFiatCurrency} 
+              />
             )}
 
           </div>
