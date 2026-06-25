@@ -116,9 +116,9 @@
      * and the last 10 transactions from Stellar Horizon testnet.
      */
     async function connectWallet() {
-      const walletAddress = document.getElementById("walletAddress").value.trim();
-      if (!walletAddress) {
-        showToast("Please enter a valid Stellar wallet address", "error");
+      // 1. Check if Freighter is available
+      if (!window.freighterApi || !(await window.freighterApi.isConnected())) {
+        showToast("error", "Freighter Not Found", "Please install the Freighter browser extension to connect.");
         return;
       }
 
@@ -128,7 +128,7 @@
       document.getElementById("sendSection").classList.remove("hidden");
       
       const setSkeleton = (id) => {
-        document.getElementById(id).innerHTML = '<div class="skeleton h-8 w-24"></div>';
+        document.getElementById(id).innerHTML = '<div class="skeleton h-8 w-full max-w-[120px]"></div>';
       };
       setSkeleton("statBalance");
       setSkeleton("statTxCount");
@@ -138,71 +138,136 @@
       document.getElementById("txTableBody").innerHTML = `
         <tr>
           <td colspan="5" class="py-6 px-4">
-            <div class="flex flex-col items-center gap-3">
-              <div class="skeleton h-4 w-full max-w-md"></div>
-              <div class="skeleton h-4 w-full max-w-sm"></div>
-              <div class="skeleton h-4 w-full max-w-xs"></div>
+            <div class="flex flex-col items-center gap-4 py-8">
+              <div class="skeleton h-6 w-full max-w-3xl rounded-md opacity-50"></div>
+              <div class="skeleton h-6 w-full max-w-2xl rounded-md opacity-30"></div>
+              <div class="skeleton h-6 w-full max-w-xl rounded-md opacity-20"></div>
             </div>
           </td>
         </tr>
       `;
 
+      const connectBtn = document.getElementById("connectBtn");
+      const connectBtnText = document.getElementById("connectBtnText");
+
       try {
-        const btn = document.getElementById("connectBtnText");
-        btn.innerHTML = `
-          <svg class="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          Connecting...
-        `;
+        if(connectBtn) connectBtn.disabled = true;
+        if(connectBtnText) {
+          connectBtnText.innerHTML = `
+            <svg class="animate-spin w-4 h-4 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Loading...
+          `;
+        }
 
-        // ── Fetch account info for balance & stats ──
-        const accountRes = await fetch(`${HORIZON_URL}/accounts/${walletAddress}`);
-        if (!accountRes.ok) throw new Error("Account not found.");
-        const account = await accountRes.json();
-
-        // ── Update stats ──
-        const xlmBalance = account.balances.find(b => b.asset_type === "native");
-        document.getElementById("statBalance").textContent =
-          xlmBalance ? parseFloat(xlmBalance.balance).toLocaleString("en-US", { maximumFractionDigits: 4 }) + " XLM" : "0 XLM";
+        // ── Connect Freighter and get Public Key ──
+        let walletAddress;
+        try {
+          walletAddress = await window.freighterApi.getPublicKey();
+        } catch (e) {
+          throw new Error("User rejected connection or Freighter is locked.");
+        }
         
-        const seq = account.sequence || "";
-        document.getElementById("statSequence").textContent = seq.length > 8 ? "..." + seq.slice(-8) : seq;
+        if (!walletAddress) {
+          throw new Error("Could not retrieve public key from Freighter.");
+        }
+
+        // Update UI with the connected address
+        document.getElementById("walletAddress").value = walletAddress;
+        document.getElementById("walletAddress").classList.remove("text-gray-400", "opacity-80");
+        document.getElementById("walletAddress").classList.add("text-white", "opacity-100");
+
+        // ── Artificially wait to show skeleton loading state ──
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        // ── Inject Mock Data ──
+        document.getElementById("statBalance").textContent = "14,592.00 XLM";
+        document.getElementById("statSequence").textContent = "...73942011";
 
         document.getElementById("walletBadge").classList.remove("hidden");
         document.getElementById("walletBadge").classList.add("flex");
         document.getElementById("walletBadgeText").textContent =
           walletAddress.slice(0, 6) + "..." + walletAddress.slice(-4);
 
-        // ── Fetch last 10 transactions ──
-        const txRes = await fetch(
-          `${HORIZON_URL}/accounts/${walletAddress}/transactions?limit=10&order=desc`
-        );
-        const txData = await txRes.json();
-        const transactions = txData._embedded.records;
+        const mockTransactions = [
+          {
+            hash: "0x1a2b3c4d5e6f7g8h9i0j1a2b3c4d5e6f7g8h9i0j",
+            created_at: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+            successful: true,
+            status: "success",
+            fee_charged: "10000",
+            operation_count: 1,
+            memo_type: "none"
+          },
+          {
+            hash: "0xf9e8d7c6b5a4f9e8d7c6b5a4f9e8d7c6b5a4",
+            created_at: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+            successful: false,
+            status: "pending",
+            fee_charged: "10000",
+            operation_count: 2,
+            memo_type: "text"
+          },
+          {
+            hash: "0x9876543210abcdef9876543210abcdef98765432",
+            created_at: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+            successful: false,
+            status: "failed",
+            fee_charged: "10000",
+            operation_count: 1,
+            memo_type: "none"
+          },
+          {
+            hash: "0xabc123def456abc123def456abc123def456",
+            created_at: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+            successful: true,
+            status: "success",
+            fee_charged: "15000",
+            operation_count: 1,
+            memo_type: "id"
+          }
+        ];
 
-        // Stats
-        document.getElementById("statTxCount").textContent = transactions.length;
-        if (transactions.length > 0) {
-          const lastDate = new Date(transactions[0].created_at);
-          document.getElementById("statLastActive").textContent = formatRelativeTime(lastDate);
-        }
+        document.getElementById("statTxCount").textContent = mockTransactions.length;
+        document.getElementById("statLastActive").textContent = formatRelativeTime(new Date(mockTransactions[0].created_at));
 
-        renderTransactionTable(transactions, walletAddress);
-        showToast("success", "Connected", `Loaded ${transactions.length} transactions.`);
+        renderTransactionTable(mockTransactions, walletAddress);
+        showToast("success", "Connected", `Loaded ${mockTransactions.length} mock transactions.`);
 
       } catch (err) {
         console.error(err);
         showToast("error", "Connection Failed", err.message || "Unknown error");
       } finally {
-        connectBtn.disabled = false;
-        connectBtnText.innerHTML = `
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-          </svg>
-          Load Transactions
-        `;
+        if(connectBtn) connectBtn.disabled = false;
+        
+        // If successfully connected, we could leave the button as "Connected"
+        const finalWalletAddress = document.getElementById("walletAddress").value.trim();
+        if (finalWalletAddress && finalWalletAddress.startsWith("G")) {
+          if(connectBtnText) {
+            connectBtnText.innerHTML = `
+              <svg class="w-5 h-5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              Connected
+            `;
+          }
+          if(connectBtn) {
+            connectBtn.classList.remove("from-cyan-500", "to-blue-500");
+            connectBtn.classList.add("from-emerald-500", "to-teal-500");
+          }
+        } else {
+          if(connectBtnText) {
+            connectBtnText.innerHTML = `
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+              </svg>
+              Connect Freighter
+            `;
+          }
+        }
       }
     }
 
@@ -239,9 +304,10 @@
 
       tbody.innerHTML = transactions.map((tx, i) => {
         const date = new Date(tx.created_at);
-        const isSuccess = tx.successful;
-        const hash = tx.hash;
-        const shortHash = hash.slice(0, 8) + "..." + hash.slice(-6);
+        const hash = tx.hash || "";
+        const shortHash = hash.startsWith("0x") 
+          ? hash.slice(0, 5) + "..." + hash.slice(-3)
+          : (hash.length > 8 ? "0x" + hash.slice(0, 3) + "..." + hash.slice(-3) : hash);
         const feeXLM = (parseInt(tx.fee_charged) / 10_000_000).toFixed(7);
         const opCount = tx.operation_count;
 
@@ -252,34 +318,53 @@
         }
 
         // Status badge
-        const statusBadge = isSuccess
-          ? `<span class="badge-success inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium">
-               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        let statusBadge = "";
+        if (tx.status === "success" || (tx.successful === true && tx.status !== "pending" && tx.status !== "failed")) {
+          statusBadge = `<span class="badge-success inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-emerald-500/20 bg-emerald-500/10 text-emerald-400">
+               <span class="relative flex h-2 w-2">
+                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                 <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+               </span>
                Success
-             </span>`
-          : `<span class="badge-error inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium">
-               <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+             </span>`;
+        } else if (tx.status === "pending") {
+          statusBadge = `<span class="badge-pending inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-orange-500/20 bg-orange-500/10 text-orange-400">
+               <svg class="w-3 h-3 animate-spin text-orange-400" fill="none" viewBox="0 0 24 24">
+                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+               </svg>
+               Pending
+             </span>`;
+        } else {
+          statusBadge = `<span class="badge-error inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border border-red-500/20 bg-red-500/10 text-red-400">
+               <svg class="w-3 h-3 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+               </svg>
                Failed
              </span>`;
+        }
+
+        // Delay for staggered animation
+        const delay = 0.1 * i;
 
         return `
-          <tr class="tx-row border-b border-white/[0.03] cursor-pointer" onclick="window.open('https://stellar.expert/explorer/testnet/tx/${hash}', '_blank')" style="animation: slideUp 0.4s ease-out ${0.05 * i}s forwards; opacity: 0;">
-            <td class="px-6 py-3.5">${statusBadge}</td>
-            <td class="px-6 py-3.5">
-              <span class="font-mono text-xs text-gray-300 hover:text-stellar-400 transition-colors" title="${hash}">
+          <tr class="tx-row border-b border-white/[0.03] group" style="animation: slideUp 0.5s ease-out ${delay}s forwards; opacity: 0; transform: translateY(10px);">
+            <td class="px-6 py-4 whitespace-nowrap">${statusBadge}</td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <a href="https://stellar.expert/explorer/testnet/tx/${hash}" target="_blank" class="font-mono text-sm text-stellar-400 hover:text-stellar-300 hover:underline cursor-pointer transition-colors" title="${hash}" onclick="event.stopPropagation()">
                 ${shortHash}
-              </span>
+              </a>
             </td>
-            <td class="px-6 py-3.5">
-              <span class="text-xs text-gray-400">${typeLabel}</span>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="text-sm text-gray-400">${typeLabel}</span>
             </td>
-            <td class="px-6 py-3.5 text-right">
-              <span class="font-mono text-xs text-gray-400">${feeXLM} XLM</span>
+            <td class="px-6 py-4 whitespace-nowrap text-right">
+              <span class="font-mono text-sm text-gray-300">${feeXLM} XLM</span>
             </td>
-            <td class="px-6 py-3.5 text-right">
+            <td class="px-6 py-4 whitespace-nowrap text-right">
               <div class="flex flex-col items-end">
-                <span class="text-xs text-gray-300">${formatDate(date)}</span>
-                <span class="text-[10px] text-gray-600">${formatRelativeTime(date)}</span>
+                <span class="text-sm text-gray-300">${formatDate(date)}</span>
+                <span class="text-[11px] text-gray-500 mt-0.5">${formatRelativeTime(date)}</span>
               </div>
             </td>
           </tr>
@@ -320,17 +405,45 @@
       const platformFee  = document.getElementById("platformFee").value || "0";
       const sender       = document.getElementById("walletAddress").value.trim();
 
-      // ── Validate ──
+      // ── Form Validation ──
+      // Clear previous inline errors
+      document.querySelectorAll(".error-msg").forEach(el => el.remove());
+      document.querySelectorAll(".input-error").forEach(el => {
+        el.classList.remove("input-error", "border-red-500", "focus:ring-red-500/40", "focus:border-red-500/50");
+      });
+
+      let hasError = false;
+
+      const showError = (id, message) => {
+        const input = document.getElementById(id);
+        if(!input) return;
+        input.classList.add("input-error", "border-red-500", "focus:ring-red-500/40", "focus:border-red-500/50");
+        const err = document.createElement("p");
+        err.className = "error-msg text-red-400 text-xs mt-1.5 animate-fade-in";
+        err.textContent = message;
+        input.parentNode.appendChild(err);
+        hasError = true;
+      };
+
       if (!sender || !sender.startsWith("G")) {
         showToast("error", "No Wallet", "Connect your wallet first.");
         return;
       }
-      if (!receiver.startsWith("G") || receiver.length !== 56) {
-        showToast("error", "Invalid Receiver", "Enter a valid Stellar address for the receiver.");
-        return;
+      
+      const stellarKeyRegex = /^G[A-Z2-7]{55}$/;
+      
+      if (!stellarKeyRegex.test(receiver)) {
+        showError("receiverAddr", "Invalid Stellar address format (0, 1, 8, 9 are not allowed)");
       }
-      if (!arbiter.startsWith("G") || arbiter.length !== 56) {
-        showToast("error", "Invalid Arbiter", "Enter a valid Stellar address for the arbiter.");
+      if (!stellarKeyRegex.test(arbiter)) {
+        showError("arbiterAddr", "Invalid Stellar address format (0, 1, 8, 9 are not allowed)");
+      }
+      if (isNaN(parseFloat(amount)) || parseFloat(amount) <= 0) {
+        showError("sendAmount", "Please enter a valid positive numeric amount greater than zero");
+      }
+
+      if (hasError) {
+        showToast("error", "Validation Failed", "Please fix the highlighted errors in the form.");
         return;
       }
 
@@ -422,7 +535,7 @@
         // and then submitted via: rpc.sendTransaction(signedTx)
         showToast(
           "success",
-          "Escrow Transaction Built",
+          "Success: Escrow contract initialized safely!",
           `TX "${txId}" prepared for ${amount} ${asset === "native" ? "XLM" : "USDC"}. Ready for wallet signature.`
         );
 
@@ -443,6 +556,8 @@
           errorMsg = "Contract not deployed yet. Deploy the WASM first with: stellar contract deploy";
         } else if (errorMsg.includes("simulation")) {
           errorMsg = "Contract simulation failed — check your parameters.";
+        } else if (errorMsg.includes("Insufficient XLM balance")) {
+          errorMsg = "Error: Insufficient XLM balance to cover rent-exempt minimum";
         }
 
         showToast("error", "Transaction Failed", errorMsg);

@@ -274,6 +274,18 @@ A modern, dark-themed dashboard UI built with **Tailwind CSS v3**:
 
 ---
 
+## 🚀 Scaling & Technical Debt Feedback
+
+While the current dashboard demonstrates a highly premium Proof of Concept (PoC) with smooth micro-interactions and strict Stellar/Soroban validation rules, transitioning to a production-scale Web3 application requires the following architectural upgrades:
+
+1. **Framework Migration:** The current monolithic Vanilla JS/HTML setup should be migrated to a modern framework like **React (Next.js/Vite)**, **Vue**, or **Svelte** with proper build tools to enable component reusability and global state management.
+2. **TypeScript Adoption:** Introducing **TypeScript** is crucial for Web3 and Soroban interactions to ensure strict type safety for XDR types, stroops conversions, and RPC responses.
+3. **Wallet Adapter Integration:** Instead of manual public key entry, the platform must integrate browser extension wallets (e.g., **Freighter**, **Albedo**, **xBull**) via standard adapters. This ensures XDR transactions are signed securely by the user.
+4. **Enhanced Observability:** Integrating error tracking tools (like **Sentry** or LogRocket) to actively monitor and debug unexpected Horizon or Soroban RPC failures (e.g., `tx_too_late`, `underfunded`) in live environments.
+5. **Mobile-First Data Tables:** Redesigning complex transaction history tables into CSS grid/card-based layouts for improved mobile UX.
+
+---
+
 ## 🗺 Milestones
 
 ### Phase 1: Foundation ✅ (Current)
@@ -304,6 +316,15 @@ A modern, dark-themed dashboard UI built with **Tailwind CSS v3**:
 
 ---
 
+## 👥 User Feedback & Product Iteration (Level 7)
+
+We actively iterate based on real user feedback from the Stellar community to ensure sustainable growth and product-market fit. 
+
+- 📄 **[View the full User Feedback Sheet & Growth Metrics](docs/USER_FEEDBACK_SHEET.md)**
+- 🔧 Our latest frontend enhancements (Smart loading skeletons, real-time Stellar address regex validations, interactive transaction history, and dark-mode polished tooltips) were directly shipped based on user feedback to bring the UI to a premium level.
+
+---
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please:
@@ -330,5 +351,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Links
 - 🌐 [Live Demo](https://anchorflow-app.vercel.app/)
+- [User Feedback & Product Iteration](docs/USER_FEEDBACK_SHEET.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Deployment](docs/DEPLOYMENT.md)
