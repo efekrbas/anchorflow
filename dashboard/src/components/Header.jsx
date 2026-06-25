@@ -4,7 +4,9 @@ import clsx from 'clsx';
 
 const Header = ({ address, isConnecting, onConnect, onDisconnect, onToggleSidebar }) => {
   const [showNotifications, setShowNotifications] = useState(false);
-  const [hasUnread, setHasUnread] = useState(true);
+  const [hasUnread, setHasUnread] = useState(() => {
+    return localStorage.getItem('anchorflow_notifications_read') !== 'true';
+  });
   const notificationRef = useRef(null);
 
   // Close notifications when clicking outside
@@ -38,7 +40,10 @@ const Header = ({ address, isConnecting, onConnect, onDisconnect, onToggleSideba
             <button 
               onClick={() => {
                 setShowNotifications(!showNotifications);
-                if (!showNotifications) setHasUnread(false);
+                if (!showNotifications && hasUnread) {
+                  setHasUnread(false);
+                  localStorage.setItem('anchorflow_notifications_read', 'true');
+                }
               }}
               className="p-2 rounded-full hover:bg-white/5 text-zinc-400 hover:text-white transition-colors relative"
             >
