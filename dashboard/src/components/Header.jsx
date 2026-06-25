@@ -4,6 +4,7 @@ import clsx from 'clsx';
 
 const Header = ({ address, isConnecting, onConnect, onDisconnect, onToggleSidebar }) => {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [hasUnread, setHasUnread] = useState(true);
   const notificationRef = useRef(null);
 
   // Close notifications when clicking outside
@@ -35,11 +36,16 @@ const Header = ({ address, isConnecting, onConnect, onDisconnect, onToggleSideba
         <div className="flex items-center gap-4 ml-auto">
           <div className="relative" ref={notificationRef}>
             <button 
-              onClick={() => setShowNotifications(!showNotifications)}
+              onClick={() => {
+                setShowNotifications(!showNotifications);
+                if (!showNotifications) setHasUnread(false);
+              }}
               className="p-2 rounded-full hover:bg-white/5 text-zinc-400 hover:text-white transition-colors relative"
             >
               <Bell className="w-5 h-5" />
-              <span className="absolute top-1.5 right-2 w-2 h-2 rounded-full bg-stellar-500 animate-pulse"></span>
+              {hasUnread && (
+                <span className="absolute top-1.5 right-2 w-2 h-2 rounded-full bg-stellar-500 animate-pulse"></span>
+              )}
             </button>
             
             {showNotifications && (
