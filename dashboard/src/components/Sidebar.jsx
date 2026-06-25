@@ -1,8 +1,8 @@
 import React from 'react';
-import { LayoutDashboard, Send, History, Settings, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, Send, History, Settings, ExternalLink, X } from 'lucide-react';
 import clsx from 'clsx';
 
-const Sidebar = ({ activeTab, setActiveTab }) => {
+const Sidebar = ({ activeTab, setActiveTab, isOpen, onClose }) => {
   const navItems = [
     { name: 'Dashboard', icon: LayoutDashboard, id: 'dashboard' },
     { name: 'Transfer', icon: Send, id: 'transfer' },
@@ -11,19 +11,33 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <aside className="w-64 border-r border-white/5 bg-surface-900/50 backdrop-blur-xl hidden md:flex flex-col relative z-10 h-screen sticky top-0">
-      <div className="p-6">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(51,129,255,0.4)] overflow-hidden">
-            <div className="w-full h-full bg-gradient-to-tr from-stellar-600 to-stellar-400 flex items-center justify-center">
-              <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-white" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-              </svg>
+    <>
+      {/* Mobile overlay backdrop */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+          onClick={onClose}
+        ></div>
+      )}
+      
+      <aside className={clsx(
+        "w-64 border-r border-white/5 bg-surface-900/50 backdrop-blur-xl flex flex-col h-screen fixed md:sticky top-0 z-50 transition-transform duration-300",
+        isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+      )}>
+        <div className="p-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(51,129,255,0.4)] overflow-hidden bg-white/5">
+              <img src="/logo.jpg" alt="AnchorFlow Logo" className="w-full h-full object-cover" />
             </div>
+            <span className="text-xl font-bold tracking-tight text-white">AnchorFlow</span>
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">AnchorFlow</span>
+          <button 
+            onClick={onClose}
+            className="md:hidden p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
-      </div>
 
       <nav className="flex-1 px-4 py-4 space-y-1">
         {navItems.map((item) => {

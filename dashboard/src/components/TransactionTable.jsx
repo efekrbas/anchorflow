@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight, ArrowDownRight, ExternalLink } from 'lucide-react';
+import { ArrowUpRight, ArrowDownRight, ExternalLink, Wallet } from 'lucide-react';
 import clsx from 'clsx';
 
 const TransactionTable = ({ transactions, address }) => {
@@ -43,7 +43,17 @@ const TransactionTable = ({ transactions, address }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5 text-sm">
-            {transactions.length === 0 ? (
+            {!address ? (
+              <tr>
+                <td colSpan="6" className="px-6 py-16 text-center">
+                  <div className="flex flex-col items-center justify-center text-zinc-500">
+                    <Wallet className="w-12 h-12 mb-3 text-zinc-600/50" />
+                    <p className="text-zinc-400 font-medium text-base">Please connect your wallet</p>
+                    <p className="text-sm mt-1">You need to connect Freighter to view your transactions.</p>
+                  </div>
+                </td>
+              </tr>
+            ) : transactions.length === 0 ? (
               <tr>
                 <td colSpan="6" className="px-6 py-12 text-center text-zinc-500">
                   No recent transactions found.

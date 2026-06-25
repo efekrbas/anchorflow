@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Wallet, Bell, Loader2, LogOut } from 'lucide-react';
+import { Wallet, Bell, Loader2, LogOut, Menu } from 'lucide-react';
 import clsx from 'clsx';
 
-const Header = ({ address, isConnecting, onConnect, onDisconnect }) => {
+const Header = ({ address, isConnecting, onConnect, onDisconnect, onToggleSidebar }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const notificationRef = useRef(null);
 
@@ -25,8 +25,14 @@ const Header = ({ address, isConnecting, onConnect, onDisconnect }) => {
 
   return (
     <header className="sticky top-0 z-40 bg-surface-900/50 backdrop-blur-xl border-b border-white/5 py-4 px-6 md:px-8">
-      <div className="flex items-center justify-end max-w-7xl mx-auto">
-        <div className="flex items-center gap-4">
+      <div className="flex items-center justify-between max-w-7xl mx-auto">
+        <button 
+          onClick={onToggleSidebar}
+          className="md:hidden p-2 -ml-2 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+        <div className="flex items-center gap-4 ml-auto">
           <div className="relative" ref={notificationRef}>
             <button 
               onClick={() => setShowNotifications(!showNotifications)}

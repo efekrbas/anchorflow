@@ -14,6 +14,13 @@ function App() {
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [toast, setToast] = useState(null);
+  
+  const showToast = (message, type = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 4000);
+  };
   
   // Mock data for now, ideally fetched from Soroban/backend
   const [metrics, setMetrics] = useState({
@@ -68,7 +75,7 @@ function App() {
       ]);
     } catch (e) {
       console.error("Failed to connect Freighter:", e);
-      alert("Failed to connect wallet. Please ensure Freighter is installed and unlocked.");
+      showToast("Failed to connect wallet. Please ensure Freighter is installed and unlocked.", "error");
     } finally {
       setIsConnecting(false);
     }
@@ -85,7 +92,7 @@ function App() {
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       setIsSendModalOpen(false);
-      alert('Payment sent successfully! (Simulated)');
+      showToast(`Payment of ${amount} XLM sent successfully!`, "success");
       
       // Update local state
       const newTx = {
@@ -104,7 +111,7 @@ function App() {
       }));
     } catch (e) {
       console.error("Payment failed:", e);
-      alert("Payment failed.");
+      showToast("Payment failed. Please try again.", "error");
     } finally {
       setIsSending(false);
     }
@@ -117,7 +124,12 @@ function App() {
       <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-stellar-600/20 rounded-full blur-[120px] pointer-events-none" style={{ animation: 'float-orb 20s infinite ease-in-out' }}></div>
       <div className="absolute bottom-[10%] right-[5%] w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" style={{ animation: 'float-orb 25s infinite ease-in-out reverse' }}></div>
 
-      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <Sidebar 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        isOpen={isSidebarOpen} 
+        onClose={() => setIsSidebarOpen(false)} 
+      />
 
       <main className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header 
@@ -125,6 +137,7 @@ function App() {
           isConnecting={isConnecting} 
           onConnect={handleConnect} 
           onDisconnect={handleDisconnect}
+          onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         />
 
         <div className="flex-1 p-6 md:p-8 overflow-y-auto">
@@ -249,6 +262,25 @@ function App() {
         onSend={handleSendPayment}
         isSending={isSending}
       />
+
+      {/* Toast Notification */}
+      <div className={clsx(
+        "fixed bottom-6 right-6 z-50 transition-all duration-300 transform",
+        toast ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none"
+      )}>
+        {toast && (
+          <div className={clsx(
+            "glass-card px-5 py-3 rounded-xl flex items-center gap-3 border shadow-2xl",
+            toast.type === 'error' ? "border-red-500/30 text-red-100" : "border-emerald-500/30 text-emerald-100"
+          )}>
+            <div className={clsx(
+              "w-2 h-2 rounded-full",
+              toast.type === 'error' ? "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]" : "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)]"
+            )}></div>
+            <p className="font-medium text-sm">{toast.message}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
