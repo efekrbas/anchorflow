@@ -18,10 +18,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
   <!-- Freighter API integration -->
-  <script type="module">
-    import { isConnected, getPublicKey, signTransaction } from 'https://cdn.jsdelivr.net/npm/@stellar/freighter-api@2.0.0/+esm';
-    window.freighterApi = { isConnected, getPublicKey, signTransaction };
-  </script>
+  <script src="https://unpkg.com/@stellar/freighter-api/build/index.min.js"></script>
 
   <!-- Google Font: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
