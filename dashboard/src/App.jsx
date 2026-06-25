@@ -46,6 +46,12 @@ function App() {
     checkConnection();
   }, []);
 
+  const handleDisconnect = () => {
+    setAddress(null);
+    setMetrics({ balance: "0.00", totalTx: 0 });
+    setTransactions([]);
+  };
+
   const handleConnect = async () => {
     setIsConnecting(true);
     try {
@@ -118,6 +124,7 @@ function App() {
           address={address} 
           isConnecting={isConnecting} 
           onConnect={handleConnect} 
+          onDisconnect={handleDisconnect}
         />
 
         <div className="flex-1 p-6 md:p-8 overflow-y-auto">
