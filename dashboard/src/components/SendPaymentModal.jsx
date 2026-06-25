@@ -51,7 +51,7 @@ const SendPaymentModal = ({ isOpen, onClose, onSend, isSending }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-zinc-300 mb-1.5">Amount (XLM)</label>
+            <label className="block text-sm font-medium text-zinc-300 mb-1.5">Amount</label>
             <div className="relative">
               <input
                 type="number"
@@ -60,11 +60,11 @@ const SendPaymentModal = ({ isOpen, onClose, onSend, isSending }) => {
                 placeholder="0.00"
                 min="0.0000001"
                 step="any"
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-stellar-500/50 focus:border-stellar-500/50 transition-all pl-12"
+                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-stellar-500/50 focus:border-stellar-500/50 transition-all pr-12"
                 required
               />
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 font-medium">
-                $
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 font-medium text-sm">
+                XLM
               </span>
             </div>
           </div>
