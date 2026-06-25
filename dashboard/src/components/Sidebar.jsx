@@ -26,11 +26,11 @@ const Sidebar = ({ activeTab, setActiveTab, isOpen, onClose, logoSrc }) => {
       )}>
         <div className="p-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(51,129,255,0.4)] overflow-hidden bg-white/5">
+            <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center shadow-[0_0_15px_rgba(51,129,255,0.4)] bg-transparent">
               {logoSrc ? (
-                <img src={logoSrc} alt="Brand Logo" className="w-full h-full object-cover scale-110" />
+                <img src={logoSrc} alt="Brand Logo" className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full bg-gradient-to-tr from-stellar-600 to-stellar-400 flex items-center justify-center">
+                <div className="w-full h-full rounded-lg bg-gradient-to-tr from-stellar-600 to-stellar-400 flex items-center justify-center">
                   <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-white" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                   </svg>
