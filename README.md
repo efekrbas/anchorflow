@@ -321,7 +321,7 @@ While the current dashboard demonstrates a highly premium Proof of Concept (PoC)
 We actively iterate based on real user feedback from the Stellar community to ensure sustainable growth and product-market fit. 
 
 - 📄 **[View the full User Feedback Sheet & Growth Metrics](docs/USER_FEEDBACK_SHEET.md)**
-- 🔧 Our latest frontend enhancements (Smart loading skeletons, real-time Stellar address regex validations, interactive transaction history, and dark-mode polished tooltips) were directly shipped based on user feedback to bring the UI to a premium level.
+- 🔧 Our latest frontend enhancements (Premium "Glassmorphism" UI in React/Vite, real-time Freighter Wallet integration, mobile-responsive sidebars, and dynamic toast notifications) were directly shipped based on user feedback to bring the dashboard to a world-class Web3 standard.
 
 ---
 
