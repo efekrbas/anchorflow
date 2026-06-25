@@ -129,6 +129,7 @@ function App() {
         setActiveTab={setActiveTab} 
         isOpen={isSidebarOpen} 
         onClose={() => setIsSidebarOpen(false)} 
+        logoSrc="/logo.jpg"
       />
 
       <main className="flex-1 flex flex-col relative z-10 min-w-0">
