@@ -73,16 +73,14 @@ const Header = ({ address, isConnecting, onConnect, onDisconnect, onToggleSideba
           </Button>
 
           <DropdownMenu onOpenChange={handleNotificationOpenChange}>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative text-zinc-400 hover:text-stellar-400 hover:bg-white/5 transition-colors rounded-full">
-                <Bell className="w-5 h-5" />
-                {hasUnread && (
-                  <span className="absolute top-2 right-2.5 w-2 h-2 bg-stellar-500 rounded-full shadow-[0_0_8px_rgba(51,129,255,0.8)]"></span>
-                )}
-              </Button>
+            <DropdownMenuTrigger className="relative flex h-10 w-10 items-center justify-center text-zinc-400 hover:text-stellar-400 hover:bg-white/5 transition-colors rounded-full outline-none">
+              <Bell className="w-5 h-5" />
+              {hasUnread && (
+                <span className="absolute top-2 right-2.5 w-2 h-2 bg-stellar-500 rounded-full shadow-[0_0_8px_rgba(51,129,255,0.8)]"></span>
+              )}
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-72 bg-zinc-950 border-white/10 text-white">
-              <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+              <div className="px-3 py-2 text-sm font-semibold">Notifications</div>
               <DropdownMenuSeparator className="bg-white/10" />
               <DropdownMenuItem className="flex flex-col items-start gap-1 p-3 cursor-pointer focus:bg-white/5 focus:text-white">
                 <p className="text-sm font-medium">Welcome to AnchorFlow!</p>
