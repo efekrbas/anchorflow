@@ -34,18 +34,18 @@ const DashboardChart = ({ address }) => {
   if (!address) {
     return (
       <Card className="bg-zinc-950/50 border-white/10 text-white mb-6">
-        <CardHeader>
+        <CardHeader className="pb-0">
           <CardTitle className="text-xl">Balance History</CardTitle>
           <CardDescription className="text-zinc-500">Connect wallet to view history</CardDescription>
         </CardHeader>
-        <CardContent className="h-[250px] flex flex-col items-center justify-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
-            <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-zinc-600" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <CardContent className="h-[120px] flex flex-col items-center justify-center gap-2">
+          <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+            <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 text-zinc-600" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 3v18h18" />
               <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" />
             </svg>
           </div>
-          <p className="text-sm font-medium text-zinc-500">Connect your wallet to see trend</p>
+          <p className="text-xs font-medium text-zinc-600">Connect your wallet to see trend</p>
         </CardContent>
       </Card>
     );

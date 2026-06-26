@@ -206,7 +206,6 @@ function App() {
                     fiatCurrency={fiatCurrency}
                     onOpenSendModal={() => setIsSendModalOpen(true)}
                     onViewAll={() => setActiveTab('history')}
-                    onNavigateToTransfer={() => setActiveTab('transfer')}
                   />
                 )}
 

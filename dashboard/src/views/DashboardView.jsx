@@ -15,8 +15,7 @@ const DashboardView = ({
   network, 
   fiatCurrency, 
   onOpenSendModal,
-  onViewAll,
-  onNavigateToTransfer
+  onViewAll
 }) => {
   const currentSymbol = CURRENCY_SYMBOLS[fiatCurrency] || '$';
   
@@ -35,7 +34,7 @@ const DashboardView = ({
           <p className="text-zinc-400 mt-1">Manage your AnchorFlow smart contract remittances.</p>
         </div>
         <Button 
-          onClick={onNavigateToTransfer}
+          onClick={onOpenSendModal}
           disabled={!address}
           size="lg"
           className={clsx(
