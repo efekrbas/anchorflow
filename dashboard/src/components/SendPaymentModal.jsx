@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
-import { X, Send, AlertCircle, Loader2 } from 'lucide-react';
+import { Send, AlertCircle, Loader2 } from 'lucide-react';
 import clsx from 'clsx';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 const SendPaymentModal = ({ isOpen, onClose, onSend, isSending }) => {
   const [destination, setDestination] = useState('');
   const [amount, setAmount] = useState('');
-
-  if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -14,61 +22,53 @@ const SendPaymentModal = ({ isOpen, onClose, onSend, isSending }) => {
     onSend({ destination, amount });
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-0">
-      <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in" 
-        onClick={onClose}
-      ></div>
-      
-      <div className="relative glass-card w-full max-w-md rounded-2xl p-6 sm:p-8 animate-slide-up border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-        <button 
-          onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
-        >
-          <X className="w-5 h-5" />
-        </button>
+  const isDestinationInvalid = destination && !/^G[A-Z0-9]{55}$/.test(destination);
 
-        <div className="mb-6">
+  return (
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="sm:max-w-md bg-zinc-950 border-white/10 text-white shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+        <DialogHeader className="mb-2">
           <div className="w-12 h-12 rounded-full bg-stellar-500/20 flex items-center justify-center mb-4 border border-stellar-500/30">
             <Send className="w-6 h-6 text-stellar-400" />
           </div>
-          <h2 className="text-2xl font-bold text-white tracking-tight">Send Payment</h2>
-          <p className="text-zinc-400 text-sm mt-1">Transfer XLM via Soroban Smart Contract</p>
-        </div>
+          <DialogTitle className="text-2xl font-bold tracking-tight">Send Payment</DialogTitle>
+          <DialogDescription className="text-zinc-400">
+            Transfer XLM via Soroban Smart Contract
+          </DialogDescription>
+        </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-zinc-300 mb-1.5">Destination Address</label>
-            <input
+          <div className="space-y-2">
+            <Label htmlFor="destination" className="text-zinc-300">Destination Address</Label>
+            <Input
+              id="destination"
               type="text"
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
               placeholder="G..."
               className={clsx(
-                "w-full bg-black/40 border rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:ring-2 transition-all font-mono text-sm",
-                destination && !/^G[A-Z0-9]{55}$/.test(destination)
-                  ? "border-red-500/50 focus:ring-red-500/50 focus:border-red-500/50"
-                  : "border-white/10 focus:ring-stellar-500/50 focus:border-stellar-500/50"
+                "bg-black/40 border-white/10 focus-visible:ring-stellar-500/50 font-mono text-sm",
+                isDestinationInvalid && "border-red-500/50 focus-visible:ring-red-500/50"
               )}
               required
             />
-            {destination && !/^G[A-Z0-9]{55}$/.test(destination) && (
+            {isDestinationInvalid && (
               <p className="text-red-400 text-xs mt-1.5 ml-1">Must be a valid 56-character Stellar public key starting with G.</p>
             )}
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-zinc-300 mb-1.5">Amount</label>
+          <div className="space-y-2">
+            <Label htmlFor="amount" className="text-zinc-300">Amount</Label>
             <div className="relative">
-              <input
+              <Input
+                id="amount"
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 placeholder="0.00"
                 min="0.0000001"
                 step="any"
-                className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:ring-2 focus:ring-stellar-500/50 focus:border-stellar-500/50 transition-all pr-12"
+                className="bg-black/40 border-white/10 focus-visible:ring-stellar-500/50 pr-12"
                 required
               />
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 font-medium text-sm">
@@ -85,32 +85,32 @@ const SendPaymentModal = ({ isOpen, onClose, onSend, isSending }) => {
           </div>
 
           <div className="mt-6">
-            <button
+            <Button
               type="submit"
-              disabled={isSending || !destination || !amount || !/^G[A-Z0-9]{55}$/.test(destination)}
+              disabled={isSending || !destination || !amount || isDestinationInvalid}
               className={clsx(
-                "w-full flex items-center justify-center gap-2 py-3 rounded-xl font-semibold text-white transition-all shadow-lg",
-                isSending || !destination || !amount || !/^G[A-Z0-9]{55}$/.test(destination)
-                  ? "bg-stellar-600/50 cursor-not-allowed"
-                  : "bg-stellar-600 hover:bg-stellar-500 hover:shadow-[0_0_20px_rgba(51,129,255,0.4)] hover:-translate-y-0.5 btn-primary"
+                "w-full h-12 rounded-xl font-semibold text-white transition-all shadow-lg text-md",
+                isSending || !destination || !amount || isDestinationInvalid
+                  ? "bg-stellar-600/50"
+                  : "bg-stellar-600 hover:bg-stellar-500 hover:shadow-[0_0_20px_rgba(51,129,255,0.4)] hover:-translate-y-0.5"
               )}
             >
               {isSending ? (
                 <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
                   Processing...
                 </>
               ) : (
                 <>
                   Confirm Transfer
-                  <Send className="w-4 h-4 ml-1" />
+                  <Send className="w-4 h-4 ml-2" />
                 </>
               )}
-            </button>
+            </Button>
           </div>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 

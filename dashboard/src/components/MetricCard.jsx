@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Wallet } from 'lucide-react';
 import clsx from 'clsx';
 import CountUp from './CountUp';
 
@@ -29,16 +30,23 @@ const MetricCard = ({ title, value, icon: Icon, trend, delayClass, style, subtex
       <div className="flex items-start justify-between gap-4 relative z-10 pointer-events-none">
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-zinc-400">{title}</p>
-          <h3 className="text-3xl font-bold text-white mt-2 tracking-tight break-words">
-            {typeof value === 'string' && value.includes('XLM') ? (
-              <CountUp end={value.replace(' XLM', '')} suffix=" XLM" decimals={2} duration={2000} />
-            ) : typeof value === 'number' ? (
-              <CountUp end={value} duration={1500} />
-            ) : (
-              value
-            )}
-          </h3>
-          {subtext && (
+          {value === 'Connect wallet' ? (
+            <p className="text-sm font-medium text-zinc-500 mt-2 flex items-center gap-2">
+              <Wallet className="w-4 h-4" />
+              Connect wallet
+            </p>
+          ) : (
+            <h3 className="text-3xl font-bold text-white mt-2 tracking-tight break-words">
+              {typeof value === 'string' && value.includes('XLM') ? (
+                <CountUp end={value.replace(' XLM', '')} suffix=" XLM" decimals={2} duration={2000} />
+              ) : typeof value === 'number' ? (
+                <CountUp end={value} duration={1500} />
+              ) : (
+                value
+              )}
+            </h3>
+          )}
+          {subtext && value !== 'Connect wallet' && (
             <p className="text-xs font-medium text-zinc-500 mt-1">{subtext}</p>
           )}
           {trend && (

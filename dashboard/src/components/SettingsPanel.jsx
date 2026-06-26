@@ -1,9 +1,42 @@
 import React, { useState } from 'react';
-import { ShieldCheck, Globe, DollarSign, Power, Moon } from 'lucide-react';
-import clsx from 'clsx';
+import { ShieldCheck, Globe } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-const SettingsPanel = ({ network, setNetwork, fiatCurrency, setFiatCurrency }) => {
+const SettingsPanel = ({ network, setNetwork, fiatCurrency, setFiatCurrency, address }) => {
   const [autoDisconnect, setAutoDisconnect] = useState(true);
+
+  if (!address) {
+    return (
+      <div className="animate-fade-in max-w-4xl mx-auto space-y-6">
+        <div className="mb-8">
+          <h2 className="text-3xl font-bold text-white tracking-tight">Settings</h2>
+          <p className="text-zinc-400 mt-1">Manage your application preferences and security.</p>
+        </div>
+        <div className="glass-card rounded-2xl p-12 border border-white/10 flex flex-col items-center justify-center text-center">
+          <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4">
+            <ShieldCheck className="w-8 h-8 text-zinc-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-white tracking-tight mb-2">Connect wallet</h2>
+          <p className="text-zinc-500 max-w-sm">Please connect your Freighter wallet to access and modify your settings.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="animate-fade-in max-w-4xl mx-auto space-y-6">
@@ -15,89 +48,75 @@ const SettingsPanel = ({ network, setNetwork, fiatCurrency, setFiatCurrency }) =
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Preferences Section */}
-        <div className="glass-card rounded-2xl p-6 border border-white/10 space-y-6">
-          <div className="flex items-center gap-3 mb-6">
-            <Globe className="w-6 h-6 text-stellar-400" />
-            <h3 className="text-xl font-semibold text-white">Preferences</h3>
-          </div>
-
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-zinc-400 mb-2">Network Selection</label>
-              <div className="relative">
-                <select 
-                  value={network}
-                  onChange={(e) => setNetwork(e.target.value)}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white appearance-none focus:outline-none focus:border-stellar-500/50 transition-colors"
-                >
-                  <option value="Testnet">Stellar Testnet</option>
-                  <option value="Mainnet">Stellar Mainnet</option>
-                  <option value="Futurenet">Stellar Futurenet</option>
-                </select>
-                <div className="absolute right-4 top-3.5 pointer-events-none">
-                  <svg className="w-5 h-5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
-              </div>
+        <Card className="bg-zinc-950/50 border-white/10 text-white">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <Globe className="w-5 h-5 text-stellar-400" />
+              <CardTitle className="text-xl">Preferences</CardTitle>
+            </div>
+            <CardDescription className="text-zinc-400">Manage network and currency settings.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-3">
+              <Label className="text-zinc-300">Network Selection</Label>
+              <Select value={network} onValueChange={setNetwork}>
+                <SelectTrigger className="w-full bg-black/40 border-white/10 rounded-xl px-4 py-6 text-white focus:ring-stellar-500/50">
+                  <SelectValue placeholder="Select network" />
+                </SelectTrigger>
+                <SelectContent className="bg-zinc-950 border-white/10 text-white rounded-xl">
+                  <SelectItem value="Testnet">Stellar Testnet</SelectItem>
+                  <SelectItem value="Mainnet">Stellar Mainnet</SelectItem>
+                  <SelectItem value="Futurenet">Stellar Futurenet</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-zinc-400 mb-2">Display Currency (Fiat)</label>
-              <div className="relative">
-                <select 
-                  value={fiatCurrency}
-                  onChange={(e) => setFiatCurrency(e.target.value)}
-                  className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white appearance-none focus:outline-none focus:border-stellar-500/50 transition-colors"
-                >
-                  <option value="usd">USD - US Dollar ($)</option>
-                  <option value="eur">EUR - Euro (€)</option>
-                  <option value="try">TRY - Turkish Lira (₺)</option>
-                </select>
-                <div className="absolute right-4 top-3.5 pointer-events-none">
-                  <svg className="w-5 h-5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
-              </div>
+            <div className="space-y-3">
+              <Label className="text-zinc-300">Display Currency (Fiat)</Label>
+              <Select value={fiatCurrency} onValueChange={setFiatCurrency}>
+                <SelectTrigger className="w-full bg-black/40 border-white/10 rounded-xl px-4 py-6 text-white focus:ring-stellar-500/50">
+                  <SelectValue placeholder="Select currency" />
+                </SelectTrigger>
+                <SelectContent className="bg-zinc-950 border-white/10 text-white rounded-xl">
+                  <SelectItem value="usd">USD - US Dollar ($)</SelectItem>
+                  <SelectItem value="eur">EUR - Euro (€)</SelectItem>
+                  <SelectItem value="try">TRY - Turkish Lira (₺)</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
         {/* Security Section */}
-        <div className="glass-card rounded-2xl p-6 border border-white/10 space-y-6">
-          <div className="flex items-center gap-3 mb-6">
-            <ShieldCheck className="w-6 h-6 text-emerald-400" />
-            <h3 className="text-xl font-semibold text-white">Security</h3>
-          </div>
-
-          <div className="space-y-6">
+        <Card className="bg-zinc-950/50 border-white/10 text-white">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <ShieldCheck className="w-5 h-5 text-emerald-400" />
+              <CardTitle className="text-xl">Security</CardTitle>
+            </div>
+            <CardDescription className="text-zinc-400">Manage security preferences and limits.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-8">
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-zinc-200">Auto-Disconnect</p>
+                <Label className="text-zinc-200 text-base">Auto-Disconnect</Label>
                 <p className="text-sm text-zinc-500 mt-0.5">Disconnect wallet after 15m of inactivity.</p>
               </div>
-              <button 
-                onClick={() => setAutoDisconnect(!autoDisconnect)}
-                className={clsx(
-                  "relative w-12 h-6 rounded-full transition-colors duration-300 flex-shrink-0",
-                  autoDisconnect ? "bg-stellar-500" : "bg-zinc-700"
-                )}
-              >
-                <div className={clsx(
-                  "absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform duration-300",
-                  autoDisconnect ? "transform translate-x-6" : ""
-                )}></div>
-              </button>
+              <Switch 
+                checked={autoDisconnect}
+                onCheckedChange={setAutoDisconnect}
+              />
             </div>
             
             <div className="flex items-center justify-between opacity-50 pointer-events-none">
               <div>
-                <p className="font-medium text-zinc-200">Require Password</p>
+                <Label className="text-zinc-200 text-base">Require Password</Label>
                 <p className="text-sm text-zinc-500 mt-0.5">Prompt password on every transaction.</p>
               </div>
-              <button className="relative w-12 h-6 rounded-full bg-zinc-700 transition-colors duration-300 flex-shrink-0">
-                <div className="absolute top-1 left-1 w-4 h-4 rounded-full bg-zinc-400"></div>
-              </button>
+              <Switch checked={false} disabled />
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
