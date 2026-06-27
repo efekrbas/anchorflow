@@ -162,10 +162,42 @@ function App() {
   }
 
   return (
-    <div className="flex min-h-screen relative overflow-hidden bg-zinc-950">
+    <div className="flex min-h-screen relative overflow-hidden" style={{ background: '#060a14' }}>
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-black">Skip to main content</a>
+      {/* Grid background */}
       <div className="bg-grid"></div>
-      <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-stellar-600/20 rounded-full blur-[120px] pointer-events-none" style={{ animation: 'float-orb 20s infinite ease-in-out' }}></div>
-      <div className="absolute bottom-[10%] right-[5%] w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" style={{ animation: 'float-orb 25s infinite ease-in-out reverse' }}></div>
+      
+      {/* Ambient orbs */}
+      <div 
+        className="absolute w-[600px] h-[600px] rounded-full pointer-events-none" 
+        style={{ 
+          top: '15%', 
+          left: '5%', 
+          background: 'radial-gradient(circle, rgba(51,129,255,0.12) 0%, transparent 70%)',
+          filter: 'blur(80px)',
+          animation: 'float-orb 20s infinite ease-in-out' 
+        }}
+      ></div>
+      <div 
+        className="absolute w-[500px] h-[500px] rounded-full pointer-events-none" 
+        style={{ 
+          bottom: '5%', 
+          right: '0%', 
+          background: 'radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%)',
+          filter: 'blur(80px)',
+          animation: 'float-orb-reverse 25s infinite ease-in-out' 
+        }}
+      ></div>
+      <div 
+        className="absolute w-[400px] h-[400px] rounded-full pointer-events-none" 
+        style={{ 
+          top: '60%', 
+          left: '40%', 
+          background: 'radial-gradient(circle, rgba(51,129,255,0.05) 0%, transparent 70%)',
+          filter: 'blur(100px)',
+          animation: 'float-orb 30s infinite ease-in-out' 
+        }}
+      ></div>
 
       <Sidebar 
         activeTab={activeTab} 
@@ -185,16 +217,16 @@ function App() {
           network={network}
         />
 
-        <div className="flex-1 p-6 md:p-8 overflow-y-auto">
+        <div id="main-content" className="flex-1 p-6 md:p-8 overflow-y-auto" tabIndex="-1">
           <div className="max-w-7xl mx-auto space-y-8">
             
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
               >
                 {activeTab === 'dashboard' && (
                   <DashboardView 
@@ -257,7 +289,7 @@ function App() {
         }}
       />
 
-      <Toaster theme="dark" position="bottom-right" />
+      <Toaster theme="dark" position="bottom-right" richColors />
     </div>
   );
 }
