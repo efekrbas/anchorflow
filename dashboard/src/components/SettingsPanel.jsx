@@ -56,25 +56,25 @@ const SettingsPanel = ({ network, setNetwork, fiatCurrency, setFiatCurrency, add
         {/* Preferences Section */}
         <Card className="card-double-bezel border-0 text-white shadow-none bg-transparent h-full flex flex-col">
           <div className="card-double-bezel-inner relative overflow-hidden pb-6 flex-1 flex flex-col">
-          <CardHeader>
-            <div className="flex items-center gap-3 relative z-10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-stellar-500/15 to-purple-500/10 border border-white/10 flex items-center justify-center">
-                <Globe className="w-5 h-5 text-stellar-400" />
+          <CardHeader className="p-8 pb-8">
+            <div className="flex items-center gap-4 relative z-10">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-stellar-500/15 to-purple-500/10 border border-white/10 flex items-center justify-center">
+                <Globe className="w-6 h-6 text-stellar-400" />
               </div>
               <div>
-                <CardTitle className="text-lg font-bold">Preferences</CardTitle>
-                <CardDescription className="text-zinc-500 text-sm">Network and currency settings.</CardDescription>
+                <CardTitle className="text-xl font-bold">Preferences</CardTitle>
+                <CardDescription className="text-zinc-500 text-[13px] mt-1">Network and currency settings.</CardDescription>
               </div>
             </div>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="p-8 pt-0 space-y-8">
             <div className="space-y-3">
               <Label className="text-zinc-300 text-sm font-medium">Network Selection</Label>
               <Select value={network} onValueChange={setNetwork}>
                 <SelectTrigger className="w-full bg-white/[0.03] border-white/10 rounded-xl px-4 py-6 text-white focus:ring-stellar-500/40 cursor-pointer">
                   <SelectValue placeholder="Select network" />
                 </SelectTrigger>
-                <SelectContent className="bg-zinc-950/95 backdrop-blur-xl border-white/10 text-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
+                <SelectContent className="glass-card-premium border-0 p-1 text-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
                   <SelectItem value="Testnet" className="cursor-pointer">Stellar Testnet</SelectItem>
                   <SelectItem value="Mainnet" className="cursor-pointer">Stellar Mainnet</SelectItem>
                   <SelectItem value="Futurenet" className="cursor-pointer">Stellar Futurenet</SelectItem>
@@ -88,7 +88,7 @@ const SettingsPanel = ({ network, setNetwork, fiatCurrency, setFiatCurrency, add
                 <SelectTrigger className="w-full bg-white/[0.03] border-white/10 rounded-xl px-4 py-6 text-white focus:ring-stellar-500/40 cursor-pointer">
                   <SelectValue placeholder="Select currency" />
                 </SelectTrigger>
-                <SelectContent className="bg-zinc-950/95 backdrop-blur-xl border-white/10 text-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
+                <SelectContent className="glass-card-premium border-0 p-1 text-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
                   <SelectItem value="usd" className="cursor-pointer">USD - US Dollar ($)</SelectItem>
                   <SelectItem value="eur" className="cursor-pointer">EUR - Euro (€)</SelectItem>
                   <SelectItem value="try" className="cursor-pointer">TRY - Turkish Lira (₺)</SelectItem>
@@ -102,18 +102,18 @@ const SettingsPanel = ({ network, setNetwork, fiatCurrency, setFiatCurrency, add
         {/* Security Section */}
         <Card className="card-double-bezel border-0 text-white shadow-none bg-transparent h-full flex flex-col">
           <div className="card-double-bezel-inner relative overflow-hidden pb-6 flex-1 flex flex-col">
-          <CardHeader>
-            <div className="flex items-center gap-3 relative z-10">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/15 to-emerald-500/5 border border-white/10 flex items-center justify-center">
-                <ShieldCheck className="w-5 h-5 text-emerald-400" />
+          <CardHeader className="p-8 pb-8">
+            <div className="flex items-center gap-4 relative z-10">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/15 to-emerald-500/5 border border-white/10 flex items-center justify-center">
+                <ShieldCheck className="w-6 h-6 text-emerald-400" />
               </div>
               <div>
-                <CardTitle className="text-lg font-bold">Security</CardTitle>
-                <CardDescription className="text-zinc-500 text-sm">Security preferences and limits.</CardDescription>
+                <CardTitle className="text-xl font-bold">Security</CardTitle>
+                <CardDescription className="text-zinc-500 text-[13px] mt-1">Security preferences and limits.</CardDescription>
               </div>
             </div>
           </CardHeader>
-          <CardContent className="space-y-8">
+          <CardContent className="p-8 pt-0 space-y-10">
             <div className="flex items-center justify-between">
               <div>
                 <Label className="text-zinc-200 text-sm font-medium">Auto-Disconnect</Label>
@@ -151,9 +151,9 @@ const SettingsPanel = ({ network, setNetwork, fiatCurrency, setFiatCurrency, add
       {/* Contract Info */}
       <Card className="card-double-bezel border-0 text-white shadow-none bg-transparent flex flex-col mt-6">
         <div className="card-double-bezel-inner relative overflow-hidden flex-1">
-        <CardContent className="p-5 flex items-center gap-4 relative z-10">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-stellar-500/10 to-purple-500/8 border border-white/8 flex items-center justify-center flex-shrink-0">
-            <Zap className="w-5 h-5 text-stellar-400" />
+        <CardContent className="p-8 flex items-center gap-5 relative z-10">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-stellar-500/10 to-purple-500/8 border border-white/8 flex items-center justify-center flex-shrink-0">
+            <Zap className="w-6 h-6 text-stellar-400" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-zinc-300">Smart Contract</p>
