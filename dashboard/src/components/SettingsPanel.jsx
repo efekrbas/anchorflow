@@ -54,7 +54,7 @@ const SettingsPanel = ({ network, setNetwork, fiatCurrency, setFiatCurrency, add
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Preferences Section */}
-        <Card className="card-double-bezel border-0 text-white shadow-none bg-transparent flex flex-col">
+        <Card className="card-double-bezel border-0 text-white shadow-none bg-transparent h-full flex flex-col">
           <div className="card-double-bezel-inner relative overflow-hidden pb-6 flex-1 flex flex-col">
           <CardHeader>
             <div className="flex items-center gap-3 relative z-10">
@@ -100,7 +100,7 @@ const SettingsPanel = ({ network, setNetwork, fiatCurrency, setFiatCurrency, add
         </Card>
 
         {/* Security Section */}
-        <Card className="card-double-bezel border-0 text-white shadow-none bg-transparent flex flex-col">
+        <Card className="card-double-bezel border-0 text-white shadow-none bg-transparent h-full flex flex-col">
           <div className="card-double-bezel-inner relative overflow-hidden pb-6 flex-1 flex flex-col">
           <CardHeader>
             <div className="flex items-center gap-3 relative z-10">
