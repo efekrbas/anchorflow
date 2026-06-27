@@ -74,7 +74,7 @@ const SettingsPanel = ({ network, setNetwork, fiatCurrency, setFiatCurrency, add
                 <SelectTrigger className="w-full bg-white/[0.03] border-white/10 rounded-xl px-4 py-6 text-white focus:ring-stellar-500/40 cursor-pointer">
                   <SelectValue placeholder="Select network" />
                 </SelectTrigger>
-                <SelectContent className="glass-card-premium border-0 p-1 text-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
+                <SelectContent className="bg-zinc-950/95 backdrop-blur-xl border border-white/10 p-1 text-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.4)] [&::-webkit-scrollbar]:hidden">
                   <SelectItem value="Testnet" className="cursor-pointer">Stellar Testnet</SelectItem>
                   <SelectItem value="Mainnet" className="cursor-pointer">Stellar Mainnet</SelectItem>
                   <SelectItem value="Futurenet" className="cursor-pointer">Stellar Futurenet</SelectItem>
@@ -88,7 +88,7 @@ const SettingsPanel = ({ network, setNetwork, fiatCurrency, setFiatCurrency, add
                 <SelectTrigger className="w-full bg-white/[0.03] border-white/10 rounded-xl px-4 py-6 text-white focus:ring-stellar-500/40 cursor-pointer">
                   <SelectValue placeholder="Select currency" />
                 </SelectTrigger>
-                <SelectContent className="glass-card-premium border-0 p-1 text-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
+                <SelectContent className="bg-zinc-950/95 backdrop-blur-xl border border-white/10 p-1 text-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.4)] [&::-webkit-scrollbar]:hidden">
                   <SelectItem value="usd" className="cursor-pointer">USD - US Dollar ($)</SelectItem>
                   <SelectItem value="eur" className="cursor-pointer">EUR - Euro (€)</SelectItem>
                   <SelectItem value="try" className="cursor-pointer">TRY - Turkish Lira (₺)</SelectItem>

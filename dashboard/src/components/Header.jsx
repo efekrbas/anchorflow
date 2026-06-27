@@ -89,7 +89,7 @@ const Header = ({ address, isConnecting, onConnect, onDisconnect, onToggleSideba
                 </span>
               )}
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-72 glass-card-premium border-0 p-1 text-white shadow-[0_8px_48px_rgba(0,0,0,0.5)]">
+            <DropdownMenuContent align="end" className="w-72 bg-zinc-950/95 backdrop-blur-xl border border-white/10 p-1 text-white rounded-2xl shadow-[0_8px_48px_rgba(0,0,0,0.5)] [&::-webkit-scrollbar]:hidden">
               <div className="px-3 py-2.5 text-sm font-semibold flex items-center justify-between">
                 Notifications
                 {hasUnread && <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-stellar-500/20 text-stellar-400 font-medium">New</span>}
