@@ -27,19 +27,21 @@ const SendPaymentModal = ({ isOpen, onClose, onSend, isSending }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-md bg-zinc-950/95 backdrop-blur-2xl border-white/10 text-white shadow-[0_0_60px_rgba(0,0,0,0.5),0_0_30px_rgba(51,129,255,0.05)]">
-        <DialogHeader className="mb-3">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-stellar-500/20 to-purple-500/15 flex items-center justify-center mb-4 border border-stellar-500/25 shadow-[0_0_25px_rgba(51,129,255,0.15)]">
-            <Send className="w-6 h-6 text-stellar-400" />
-          </div>
-          <DialogTitle className="text-2xl font-bold tracking-tight">Send Payment</DialogTitle>
-          <DialogDescription className="text-zinc-400">
-            Transfer XLM via Soroban Smart Contract
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="sm:max-w-md p-0 border-0 bg-transparent shadow-none">
+        <div className="card-double-bezel">
+          <div className="card-double-bezel-inner relative overflow-hidden p-6 sm:p-8">
+            <DialogHeader className="mb-5 relative z-10">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-stellar-500/20 to-purple-500/15 flex items-center justify-center mb-4 border border-stellar-500/25 shadow-[0_0_25px_rgba(51,129,255,0.15)]">
+                <Send className="w-6 h-6 text-stellar-400" />
+              </div>
+              <DialogTitle className="text-2xl font-bold tracking-tight">Send Payment</DialogTitle>
+              <DialogDescription className="text-zinc-400">
+                Transfer XLM via Soroban Smart Contract
+              </DialogDescription>
+            </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="space-y-2">
+        <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+          <div className="space-y-3">
             <Label htmlFor="destination" className="text-zinc-300 text-sm font-medium">Destination Address</Label>
             <div className="relative">
               <Input
@@ -68,8 +70,8 @@ const SendPaymentModal = ({ isOpen, onClose, onSend, isSending }) => {
             )}
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="amount" className="text-zinc-300 text-sm font-medium">Amount</Label>
+          <div className="space-y-3">
+            <Label htmlFor="amount" className="text-zinc-300 text-sm font-medium">Amount (XLM)</Label>
             <div className="relative">
               <Input
                 id="amount"
@@ -117,6 +119,8 @@ const SendPaymentModal = ({ isOpen, onClose, onSend, isSending }) => {
             </Button>
           </div>
         </form>
+        </div>
+        </div>
       </DialogContent>
     </Dialog>
   );
