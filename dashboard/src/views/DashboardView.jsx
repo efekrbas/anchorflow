@@ -56,17 +56,16 @@ const DashboardView = ({
             disabled={!address}
             size="lg"
             className={clsx(
-              "gap-2 rounded-xl text-sm font-semibold btn-premium cursor-pointer group",
+              "gap-3 rounded-full py-6 px-6 text-sm font-semibold cursor-pointer group relative z-10 border-0",
               "bg-gradient-to-r from-stellar-600 to-stellar-500 hover:from-stellar-500 hover:to-stellar-400",
-              "shadow-[0_0_20px_rgba(51,129,255,0.15)] hover:shadow-[0_0_30px_rgba(51,129,255,0.35)]",
-              "hover:-translate-y-0.5 transition-all text-white border-0",
+              "shadow-[0_0_20px_rgba(51,129,255,0.15)] hover:shadow-[0_8px_40px_rgba(51,129,255,0.35)]",
+              "active:scale-[0.98] transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] text-white",
               !address && "opacity-50 cursor-not-allowed"
             )}
           >
-            <Send className="w-4.5 h-4.5" aria-hidden="true" />
             Send Payment
-            <span className="btn-trailing-icon" aria-hidden="true">
-              <ArrowUpRight className="w-3.5 h-3.5" />
+            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center transform transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1 group-hover:-translate-y-[1px] group-hover:scale-105" aria-hidden="true">
+              <ArrowUpRight className="w-4 h-4" />
             </span>
           </Button>
         </div>
