@@ -115,7 +115,6 @@ function App() {
   const handleConnect = async () => {
     setIsConnecting(true);
     try {
-      await setAllowed();
       const accessResponse = await requestAccess();
       const userAddress = typeof accessResponse === 'object' ? (accessResponse.address || accessResponse.publicKey || '') : accessResponse;
       setAddress(String(userAddress));
